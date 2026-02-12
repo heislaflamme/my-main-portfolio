@@ -1,0 +1,22 @@
+@import "tailwindcss";
+
+.bg {
+  background-image: url("/images/windows.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center; /* Centers the image in the container */
+}
+.windows-white-bg{
+    background-color: rgba(255, 255, 255, 0.644);
+    backdrop-filter: blur(10px);
+}
+.hover-white:hover{
+        background-color: rgba(255, 255, 255, 0.644);
+}
+.windows-blue-bg{
+    background-color: rgba(54, 129, 214);
+}
+.windows-app-bg{
+    background-color: rgba(255, 255, 255, 0.644);
+    backdrop-filter: blur(10px);
+}
