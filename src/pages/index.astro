@@ -2,19 +2,12 @@
 import Layout from "../layout/layout.astro"
 import Taskbar from "../components/taskbar.tsx"
 import Desktop from "../components/desktop.tsx"
-import ResizableComponent from "../components/resizable"
 ---
 
 <Layout>
 	<Taskbar client:load >
 		<div class="w-full relative h-[93%] flex overflow-hidden py-4 pl-4">
 			<Desktop client:load/>
-			<div class="hero-header absolute w-full pointer-events-none h-full flex justify-center items-center">
-				<header class="text-4xl font-bold pointer-events-auto">HEY IM CHIDUBEM</header>
-			</div>
-			<ResizableComponent client:load>
-				just a test
-			</ResizableComponent>
 		</div>
 	</Taskbar>
 

@@ -73,7 +73,8 @@ export default function Taskbar({children}: {children: React.ReactNode}) {
   return (
     <>
         <div ref={ref} className="bg fixed inset-0"
-        onMouseDown={() => {
+        onMouseDown={(e) => {
+            e.stopPropagation();
             CloseAll();
             setIsSearchOpen(false);
             setIsApp2Open(false);
@@ -97,10 +98,13 @@ export default function Taskbar({children}: {children: React.ReactNode}) {
                 initial={{scale: 0, y: 500}} 
                 animate={{scale: 1, y: 0}} 
                 exit={{scale: 0, y: 500}} 
-                transition={{duration: 0.2}}
+                transition={{duration: 0.35}}
                 style={{zIndex: searchZIndex}}
-                onMouseDown={() => setSearchZIndex(getMaxZIndex() + 1)}
-                className="w-[40%] fixed bottom-13 left-1/2 rounded shadow-2xl -translate-x-1/2 h-[85%] windows-white-bg"
+                onMouseDown={(e) => {
+                    e.stopPropagation();
+                    setSearchZIndex(getMaxZIndex() + 1);
+                }}
+                className="w-[40%] fixed bottom-14 left-1/2 rounded shadow-2xl -translate-x-1/2 h-[85%] windows-white-bg"
             >
                 search
             </motion.div>
@@ -109,206 +113,341 @@ export default function Taskbar({children}: {children: React.ReactNode}) {
         {
             isApp2Open && 
             <Rnd
-              dragHandleClassName="titlebar2"
-            >
-                <motion.div 
-                layout
-                key="app2" 
-                initial={{scale: 0, y: 500}} 
-                animate={{scale: 1, y: 0}} 
-                exit={{scale: 0, y: 500}} 
-                transition={{duration: 0.2}}
-                style={{zIndex: app2ZIndex, width: isApp2Maximized ? "100%" : "70%", height: isApp2Maximized ? "93%" : "70%", bottom: isApp2Maximized ? "7%" : "52px"}}
-                onMouseDown={() => {
+                key="app2"
+                bounds="window"
+                disableDragging = {isApp2Maximized}
+                minHeight="300px"
+                minWidth="300px" 
+                default={{
+                x: (window.innerWidth - 800) / 2,
+                y: (window.innerHeight - 400) / 2,
+                width: 800,
+                height: 400
+            }}
+             dragHandleClassName="titlebar2"
+                position={
+                    isApp2Maximized ?
+                    {
+                    x: 0,
+                    y: 0
+                } :
+                 undefined
+                }
+
+                size={ isApp2Maximized ?
+                    {
+                        width: window.innerWidth,
+                        height: window.innerHeight - 52
+                    } : undefined
+                }
+                style={{zIndex: app2ZIndex }}
+                onMouseDown={(e) => {
+                    e.stopPropagation();
                     setApp2ZIndex(getMaxZIndex() + 1);
                     FocusApp2();
                     setIsSearchOpen(false);
                 }}
-                className=" shadow-2xl absolute left-1/2 -translate-x-1/2 rounded windows-app-bg active:cursor-grabbing"
             >
-                <div className="fixed top-0 flex gap-4 w-full bg-black/90 cursor-grab active:cursor-grabbing rounded-t flex-row-reverse p-2 titlebar2">
-                <button className=" hover:bg-red-500 rounded px-2 active:scale-[0.8] cursor-pointer transition-all duration-100" onClick={() => {
+            <motion.div
+                layout 
+                initial={{scale: 0, y: 500}} 
+                animate={{scale: 1, y: 0}} 
+                exit={{scale: 0, y: 500}} 
+                transition={{duration: 0.35}}
+                className=" windows-white-bg shadow-2xl rounded w-full h-full"
+            >
+                <div className="flex gap-4 w-full bg-yellow-500 rounded-t flex-row-reverse p-2 titlebar2 cursor-grab active:cursor-grabbing">
+                <button className=" hover:bg-red-500 rounded px-2 active:scale-[0.8] cursor-pointer transition-all duration-100" onClick={(e) => {
+                    e.stopPropagation();
                     setIsApp2Open(false);
                     setIsApp2Maximized(false);
                     setIsApp2Minimized(false);
                     CloseAll();
                     }}>
-                <img src="/images/exit.svg" alt="exit button" width={16} height={10} className="invert" />
+                <img src="/images/exit.svg" alt="exit button" width={16} height={10} className="invert-0" />
 
                     </button>
-                <button className="hover-white rounded px-2 active:scale-[0.8] cursor-pointer transition-all duration-100" onClick={() => setIsApp2Maximized(!isApp2Maximized)}>
-                <img src="/images/maximize.svg" alt="maximize button" width={13} height={10} className="invert hover:invert-0" />
+                <button className="hover:bg-white/10 rounded px-2 active:scale-[0.8] cursor-pointer transition-all duration-100" onClick={(e) => {
+                    e.stopPropagation();
+                    setIsApp2Maximized(!isApp2Maximized);
+                }}>
+                <img src="/images/maximize.svg" alt="maximize button" width={13} height={10} className="invert-0" />
 
                 </button>
-                <button className="hover-white rounded px-2 active:scale-[0.8] cursor-pointer transition-all duration-100" onClick={() => {
+                <button className="hover:bg-white/10 rounded px-2 active:scale-[0.8] cursor-pointer transition-all duration-100" onClick={(e) => {
+                    e.stopPropagation();
                     setIsApp2Minimized(isApp2Open ? true : false);
                     setIsApp2Open(false);
                     CloseAll();
                 }}>
-                <img src="/images/minimize.svg" alt="minimize button" width={20} height={10} className="invert hover:invert-0" />
+                <img src="/images/minimize.svg" alt="minimize button" width={20} height={10} className="invert-0" />
 
                 </button>
                 </div>
 
                 2
-            </motion.div>
+     
+            
+             </motion.div>
             </Rnd>
         }
 
         {
             isApp3Open && 
             <Rnd
-              dragHandleClassName="titlebar3"
-            >
-                <motion.div 
-                layout
-                key="app3" 
-                initial={{scale: 0, y: 500}} 
-                animate={{scale: 1, y: 0}} 
-                exit={{scale: 0, y: 500}} 
-                transition={{duration: 0.2}}
-                style={{zIndex: app3ZIndex, width: isApp3Maximized ? "100%" : "70%", height: isApp3Maximized ? "93%" : "70%", bottom: isApp3Maximized ? "7%" : "80px", left: isApp3Maximized ? "50%" : "60%"}}
-                onMouseDown={() => {
+                key="app3"
+                bounds="window"
+                disableDragging = {isApp3Maximized}
+                minHeight="300px"
+                minWidth="300px" 
+                default={{
+                x: (window.innerWidth - 900) / 2,
+                y: (window.innerHeight - 500) / 2,
+                width: 800,
+                height: 400
+            }}
+             dragHandleClassName="titlebar2"
+                position={
+                    isApp3Maximized ?
+                    {
+                    x: 0,
+                    y: 0
+                } :
+                 undefined
+                }
+
+                size={ isApp3Maximized ?
+                    {
+                        width: window.innerWidth,
+                        height: window.innerHeight - 52
+                    } : undefined
+                }
+                style={{zIndex: app3ZIndex }}
+                onMouseDown={(e) => {
+                    e.stopPropagation();
                     setApp3ZIndex(getMaxZIndex() + 1);
                     FocusApp3();
                     setIsSearchOpen(false);
                 }}
-                className="shadow-2xl absolute -translate-x-1/2 rounded windows-app-bg active:cursor-grabbing"
             >
-                <div className="fixed top-0 flex gap-4 w-full bg-black/90 cursor-grab active:cursor-grabbing rounded-t flex-row-reverse p-2 titlebar3">
-                <button className=" hover:bg-red-500 rounded px-2 active:scale-[0.8] cursor-pointer transition-all duration-100" onClick={() => {
+            <motion.div
+                layout 
+                initial={{scale: 0, y: 500}} 
+                animate={{scale: 1, y: 0}} 
+                exit={{scale: 0, y: 500}} 
+                transition={{duration: 0.35}}
+                className=" windows-white-bg shadow-2xl rounded w-full h-full"
+            >
+                <div className="flex gap-4 w-full bg-orange-500 rounded-t flex-row-reverse p-2 titlebar2 cursor-grab active:cursor-grabbing">
+                <button className=" hover:bg-red-500 rounded px-2 active:scale-[0.8] cursor-pointer transition-all duration-100" onClick={(e) => {
+                    e.stopPropagation();
                     setIsApp3Open(false);
                     setIsApp3Maximized(false);
                     setIsApp3Minimized(false);
                     CloseAll();
                     }}>
-                <img src="/images/exit.svg" alt="exit button" width={16} height={10} className="invert" />
+                <img src="/images/exit.svg" alt="exit button" width={16} height={10} className="invert-0" />
 
                     </button>
-                <button className="hover-white rounded px-2 active:scale-[0.8] cursor-pointer transition-all duration-100" onClick={() => setIsApp3Maximized(!isApp3Maximized)}>
-                <img src="/images/maximize.svg" alt="maximize button" width={13} height={10} className="invert hover:invert-0" />
+                <button className="hover:bg-white/10 rounded px-2 active:scale-[0.8] cursor-pointer transition-all duration-100" onClick={(e) => {
+                    e.stopPropagation();
+                    setIsApp3Maximized(!isApp3Maximized);
+                }}>
+                <img src="/images/maximize.svg" alt="maximize button" width={13} height={10} className="invert-0" />
 
                 </button>
-                <button className="hover-white rounded px-2 active:scale-[0.8] cursor-pointer transition-all duration-100" onClick={() => {
-                    setIsApp3Minimized(isApp3Open ? true : false);
+                <button className="hover:bg-white/10 rounded px-2 active:scale-[0.8] cursor-pointer transition-all duration-100" onClick={(e) => {
+                    e.stopPropagation();
                     setIsApp3Open(false);
                     CloseAll();
                 }}>
-                <img src="/images/minimize.svg" alt="minimize button" width={20} height={10} className="invert hover:invert-0" />
+                <img src="/images/minimize.svg" alt="minimize button" width={20} height={10} className="invert-0" />
 
                 </button>
                 </div>
+
                 3
-            </motion.div>
+     
+            
+             </motion.div>
             </Rnd>
         }
 
         {
             isApp4Open && 
             <Rnd
-              dragHandleClassName="titlebar4"
-            >
-                <motion.div 
-                layout
-                key="app4" 
-                initial={{scale: 0, y: 500}} 
-                animate={{scale: 1, y: 0}} 
-                exit={{scale: 0, y: 500}} 
-                transition={{duration: 0.2}}
-                style={{zIndex: app4ZIndex, width: isApp4Maximized ? "100%" : "70%", height: isApp4Maximized ? "93%" : "70%", bottom: isApp4Maximized ? "7%" : "80px", left: isApp4Maximized ? "50%" : "40%"}}
-                onMouseDown={() => {
+                key="app4"
+                bounds="window"
+                disableDragging = {isApp4Maximized}
+                minHeight="300px"
+                minWidth="300px" 
+                default={{
+                x: (window.innerWidth - 700) / 2,
+                y: (window.innerHeight - 300) / 2,
+                width: 800,
+                height: 400
+            }}
+             dragHandleClassName="titlebar2"
+                position={
+                    isApp4Maximized ?
+                    {
+                    x: 0,
+                    y: 0
+                } :
+                 undefined
+                }
+
+                size={ isApp4Maximized ?
+                    {
+                        width: window.innerWidth,
+                        height: window.innerHeight - 52
+                    } : undefined
+                }
+                style={{zIndex: app4ZIndex }}
+                onMouseDown={(e) => {
+                    e.stopPropagation();
                     setApp4ZIndex(getMaxZIndex() + 1);
                     FocusApp4();
                     setIsSearchOpen(false);
                 }}
-                className=" shadow-2xl absolute -translate-x-1/2 rounded windows-app-bg active:cursor-grabbing"
             >
-                <div className="fixed top-0 flex gap-4 w-full bg-black/90 cursor-grab active:cursor-grabbing rounded-t flex-row-reverse p-2 titlebar4">
-                <button className=" hover:bg-red-500 rounded px-2 active:scale-[0.8] cursor-pointer transition-all duration-100" onClick={() => {
+            <motion.div
+                layout 
+                initial={{scale: 0, y: 500}} 
+                animate={{scale: 1, y: 0}} 
+                exit={{scale: 0, y: 500}} 
+                transition={{duration: 0.35}}
+                className=" windows-white-bg shadow-2xl rounded w-full h-full"
+            >
+                <div className="flex gap-4 w-full windows-blue-bg rounded-t flex-row-reverse p-2 titlebar2 cursor-grab active:cursor-grabbing">
+                <button className=" hover:bg-red-500 rounded px-2 active:scale-[0.8] cursor-pointer transition-all duration-100" onClick={(e) => {
+                    e.stopPropagation();
                     setIsApp4Open(false);
                     setIsApp4Maximized(false);
                     setIsApp4Minimized(false);
                     CloseAll();
                     }}>
-                <img src="/images/exit.svg" alt="exit button" width={16} height={10} className="invert" />
+                <img src="/images/exit.svg" alt="exit button" width={16} height={10} className="invert-0" />
 
                     </button>
-                <button className="hover-white rounded px-2 active:scale-[0.8] cursor-pointer transition-all duration-100" onClick={() => setIsApp4Maximized(!isApp4Maximized)}>
-                <img src="/images/maximize.svg" alt="maximize button" width={13} height={10} className="invert hover:invert-0" />
+                <button className="hover:bg-white/10 rounded px-2 active:scale-[0.8] cursor-pointer transition-all duration-100" onClick={(e) => {
+                    e.stopPropagation();
+                    setIsApp4Maximized(!isApp4Maximized);
+                }}>
+                <img src="/images/maximize.svg" alt="maximize button" width={13} height={10} className="invert-0" />
 
                 </button>
-                <button className="hover-white rounded px-2 active:scale-[0.8] cursor-pointer transition-all duration-100" onClick={() => {
+                <button className="hover:bg-white/10 rounded px-2 active:scale-[0.8] cursor-pointer transition-all duration-100" onClick={(e) => {
+                    e.stopPropagation();
                     setIsApp4Minimized(isApp4Open ? true : false);
                     setIsApp4Open(false);
                     CloseAll();
                 }}>
-                <img src="/images/minimize.svg" alt="minimize button" width={20} height={10} className="invert hover:invert-0" />
+                <img src="/images/minimize.svg" alt="minimize button" width={20} height={10} className="invert-0" />
 
                 </button>
                 </div>
+
                 4
-            </motion.div>
+     
+            
+             </motion.div>
             </Rnd>
         }
 
         {
             isApp5Open && 
             <Rnd
-              dragHandleClassName="titlebar5"
-            >
-                <motion.div 
-                layout
-                key="app5" 
-                initial={{scale: 0, y: 500}} 
-                animate={{scale: 1, y: 0}} 
-                exit={{scale: 0, y: 500}} 
-                transition={{duration: 0.2}}
-                style={{zIndex: app5ZIndex, width: isApp5Maximized ? "100%" : "70%", height: isApp5Maximized ? "93%" : "70%", bottom: isApp5Maximized ? "7%" : "68px", left: isApp5Maximized ? "50%" : "45%"}}
-                onMouseDown={() => {
+            key="app5"
+                bounds="window"
+                disableDragging = {isApp5Maximized}
+                minHeight="300px"
+                minWidth="300px" 
+                default={{
+                x: (window.innerWidth - 750) / 2,
+                y: (window.innerHeight - 400) / 2,
+                width: 800,
+                height: 400
+            }}
+             dragHandleClassName="titlebar2"
+                position={
+                    isApp5Maximized ?
+                    {
+                    x: 0,
+                    y: 0
+                } :
+                 undefined
+                }
+
+                size={ isApp5Maximized ?
+                    {
+                        width: window.innerWidth,
+                        height: window.innerHeight - 52
+                    } : undefined
+                }
+                style={{zIndex: app5ZIndex }}
+                onMouseDown={(e) => {
+                    e.stopPropagation();
                     setApp5ZIndex(getMaxZIndex() + 1);
                     FocusApp5();
                     setIsSearchOpen(false);
                 }}
-                className="shadow-2xl absolute -translate-x-1/2 rounded windows-app-bg active:cursor-grabbing"
             >
-                <div className="fixed top-0 flex gap-4 w-full bg-black/90 cursor-grab active:cursor-grabbing rounded-t flex-row-reverse p-2 titlebar5">
-                <button className=" hover:bg-red-500 rounded px-2 active:scale-[0.8] cursor-pointer transition-all duration-100" onClick={() => {
+            <motion.div
+                layout 
+                initial={{scale: 0, y: 500}} 
+                animate={{scale: 1, y: 0}} 
+                exit={{scale: 0, y: 500}} 
+                transition={{duration: 0.35}}
+                className=" windows-white-bg shadow-2xl rounded w-full h-full"
+            >
+                <div className="flex gap-4 w-full bg-purple-950 rounded-t flex-row-reverse p-2 titlebar2 cursor-grab active:cursor-grabbing">
+                <button className=" hover:bg-red-500 rounded px-2 active:scale-[0.8] cursor-pointer transition-all duration-100" onClick={(e) => {
+                    e.stopPropagation();
                     setIsApp5Open(false);
                     setIsApp5Maximized(false);
                     setIsApp5Minimized(false);
                     CloseAll();
                     }}>
-                <img src="/images/exit.svg" alt="exit button" width={16} height={10} className="invert" />
+                <img src="/images/exit.svg" alt="exit button" width={16} height={10} className="invert-0" />
 
                     </button>
-                <button className="hover-white rounded px-2 active:scale-[0.8] cursor-pointer transition-all duration-100" onClick={() => setIsApp5Maximized(!isApp5Maximized)}>
-                <img src="/images/maximize.svg" alt="maximize button" width={13} height={10} className="invert hover:invert-0" />
+                <button className="hover:bg-white/10 rounded px-2 active:scale-[0.8] cursor-pointer transition-all duration-100" onClick={(e) => {
+                    e.stopPropagation();
+                    setIsApp5Maximized(!isApp5Maximized);
+                }}>
+                <img src="/images/maximize.svg" alt="maximize button" width={13} height={10} className="invert-0" />
 
                 </button>
-                <button className="hover-white rounded px-2 active:scale-[0.8] cursor-pointer transition-all duration-100" onClick={() => {
+                <button className="hover:bg-white/10 rounded px-2 active:scale-[0.8] cursor-pointer transition-all duration-100" onClick={(e) => {
+                    e.stopPropagation();
                     setIsApp5Minimized(isApp5Open ? true : false);
                     setIsApp5Open(false);
                     CloseAll();
                 }}>
-                <img src="/images/minimize.svg" alt="minimize button" width={20} height={10} className="invert hover:invert-0" />
+                <img src="/images/minimize.svg" alt="minimize button" width={20} height={10} className="invert-0" />
 
                 </button>
                 </div>
+
                 5
-            </motion.div>
+     
+            
+             </motion.div>
             </Rnd>
         }
 
         </AnimatePresence>
 
-      <div className="windows-white-bg fixed bottom-0 h-[7%] gap-5 items-center w-full flex justify-center z-50">
+      <div className="windows-white-bg fixed bottom-0 h-13 gap-5 items-center w-full flex justify-center z-50">
         <a href="/">
         <App className="h-10 w-10 cursor-pointer rounded flex justify-center items-center hover-white">
             <img src="/images/Windows.png" alt="Windows Icon" width={30} height={30} />
         </App>
         </a>
 
-        <App className="flex justify-center items-center rounded-2xl cursor-pointer h-7.5 w-25" style={{ backgroundColor: isSearchOpen ? "rgba(54, 129, 214)" : "rgba(0,0,0,0.3)"}} onClick={() => {
+        <App className="flex justify-center items-center rounded-2xl cursor-pointer h-7.5 w-25" style={{ backgroundColor: isSearchOpen ? "rgba(54, 129, 214)" : "rgba(0,0,0,0.3)"}} onClick={(e) => {
+            e.stopPropagation();
             setIsSearchOpen(!isSearchOpen);  // Toggle
             if (!isSearchOpen) setSearchZIndex(getMaxZIndex() + 1);  // Bring to front only when opening
         }}>
@@ -318,7 +457,8 @@ export default function Taskbar({children}: {children: React.ReactNode}) {
 
         <App className="relative h-10 w-10 cursor-pointer rounded flex justify-center items-center hover-white" 
             style={{ backgroundColor: isApp2Focused ? "rgba(255, 255, 255, 0.644)" : " "}}
-            onClick={() => {
+            onClick={(e) => {
+                e.stopPropagation();
             setIsApp2Open(!isApp2Open); 
             if(isApp2Open){
                 setIsApp2Focused(false);
@@ -342,7 +482,8 @@ export default function Taskbar({children}: {children: React.ReactNode}) {
 
         <App className="relative h-10 w-10 cursor-pointer rounded flex justify-center items-center hover-white" 
             style={{ backgroundColor: isApp3Focused ? "rgba(255, 255, 255, 0.644)" : " "}}
-            onClick={() => {
+            onClick={(e) => {
+                e.stopPropagation();
             setIsApp3Open(!isApp3Open);
             if(isApp3Open){
                 setIsApp3Focused(false);
@@ -364,7 +505,8 @@ export default function Taskbar({children}: {children: React.ReactNode}) {
 
         <App className="relative h-10 w-10 cursor-pointer rounded flex justify-center items-center hover-white" 
             style={{ backgroundColor: isApp4Focused ? "rgba(255, 255, 255, 0.644)" : " "}}
-            onClick={() => {
+            onClick={(e) => {
+                e.stopPropagation();
             setIsApp4Open(!isApp4Open);
             if(isApp4Open){
                 setIsApp4Focused(false);
@@ -387,7 +529,8 @@ export default function Taskbar({children}: {children: React.ReactNode}) {
 
         <App className="relative h-10 w-10 cursor-pointer rounded flex justify-center items-center hover-white" 
             style={{ backgroundColor: isApp5Focused ? "rgba(255, 255, 255, 0.644)" : " "}}
-            onClick={() => {
+            onClick={(e) => {
+                e.stopPropagation();
             setIsApp5Open(!isApp5Open); 
             if(isApp5Open){
                 setIsApp5Focused(false);
@@ -400,7 +543,7 @@ export default function Taskbar({children}: {children: React.ReactNode}) {
             };  // Bring to front only when opening
         }}>
 
-            <img src="/images/comments.png" alt="Comments Icon" width={30} height={30} className="pb-2" />
+            <img src="/images/comments.png" alt="Comments Icon" width={30} height={30} className="pb-1" />
 
 
             {
