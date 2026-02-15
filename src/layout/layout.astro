@@ -8,12 +8,12 @@ import '../styles/global.css'
     <!-- Basic Meta Tags -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <meta name="theme-color" content="#068599">
+    <meta name="theme-color" content="#11899c">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    
+    <link rel="sitemap" href="/sitemap-index.xml" />
     <!-- Primary Meta Tags -->
     <title>Chidubem - Full Stack Developer</title>
-    <meta name="title" content="Chidubem - Full Stack Developer Portfolio">
+    <meta name="title" content="Chidubem - Full Stack Web Developer">
     <meta name="description" content="Explore my portfolio, a full stack developer specializing in modern web technologies and innovative solutions.">
     <meta name="keywords" content="Chidubem, full stack developer, web development, portfolio, React, Supabase, JavaScript, TypeScript, PostgreSQL, front end developer,  RESTful APIs, responsive design, SEO optimization">
     <meta name="author" content="Chidubem">
@@ -27,79 +27,35 @@ import '../styles/global.css'
     <!-- Open Graph / Facebook Meta Tags -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://chidubem.name.ng">
-    <meta property="og:title" content="Chidubem - Full Stack Developer Portfolio">
+    <meta property="og:title" content="Chidubem - Full Stack Web Developer">
     <meta property="og:description" content="Explore my portfolio, a full stack developer specializing in modern web technologies and innovative solutions.">
-    <meta property="og:image" content="https://chidubem.name.ng/images/og-image.jpg">
-    <meta property="og:image:width" content="1200">
-    <meta property="og:image:height" content="630">
-    <meta property="og:site_name" content="Chidubem Portfolio">
+    <meta property="og:image" content="https://chidubem.name.ng/og-image.png">
+    <meta property="og:site_name" content="Chidubem's Portfolio">
     <meta property="og:locale" content="en_US">
     
     <!-- Twitter Card Meta Tags -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:url" content="https://chidubem.name.ng">
-    <meta name="twitter:title" content="Chidubem - Full Stack Developer Portfolio">
+    <meta name="twitter:title" content="Chidubem - Full Stack Web Developer">
     <meta name="twitter:description" content="Explore my portfolio, a full stack developer specializing in modern web technologies and innovative solutions.">
-    <meta name="twitter:image" content="https://www.yourwebsite.com/images/twitter-image.jpg">
-    <meta name="twitter:site" content="@yourtwitterhandle">
-    <meta name="twitter:creator" content="@yourtwitterhandle">
+    <meta name="twitter:image" content="https://chidubem.name.ng/og-image.png">
+    <meta name="twitter:site" content="@heislaflame">
+    <meta name="twitter:creator" content="@heislaflame">
     
     <!-- Additional SEO Tags -->
-    <meta name="theme-color" content="#ffffff">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <meta name="apple-mobile-web-app-title" content="Your App Name">
     
     <!-- Favicon Links -->
-    <link rel="icon" type="image/x-icon" href="/favicon.ico">
-    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-    <link rel="manifest" href="/site.webmanifest">
-    
-    <!-- Structured Data (JSON-LD) - Organization Example -->
-    <script type="application/ld+json">
-    {
-        "@context": "https://schema.org",
-        "@type": "Organization",
-        "name": "Your Organization Name",
-        "url": "https://www.yourwebsite.com",
-        "logo": "https://www.yourwebsite.com/logo.png",
-        "description": "Your organization description",
-        "sameAs": [
-            "https://www.facebook.com/yourpage",
-            "https://www.twitter.com/yourhandle",
-            "https://www.linkedin.com/company/yourcompany",
-            "https://www.instagram.com/yourhandle"
-        ],
-        "contactPoint": {
-            "@type": "ContactPoint",
-            "telephone": "+1-XXX-XXX-XXXX",
-            "contactType": "Customer Service"
-        }
-    }
-    </script>
-    
-    <!-- Structured Data (JSON-LD) - WebPage Example -->
-    <script type="application/ld+json">
-    {
-        "@context": "https://schema.org",
-        "@type": "WebPage",
-        "name": "Your Page Name",
-        "description": "Your page description",
-        "url": "https://chidubem.name.ng",
-        "inLanguage": "en-US",
-        "datePublished": "2024-01-01",
-        "dateModified": "2024-01-15"
-    }
-    </script>
-    
+    <link rel="icon" type="image/png" href="/icon.png">
+    <link rel="apple-touch-icon" href="/icon.png">
     
 </head>
 <body class="h-full overflow-hidden">
 
-   <slot />
+<slot />
     
 </body>
 </html>

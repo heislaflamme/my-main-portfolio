@@ -82,7 +82,7 @@ export default function Skills({color}: {color?: string}) {
                   </motion.div>
 
                   <motion.div initial={{x:100}} whileInView={{x:0}} whileTap={{ scale: 0.95 }} whileHover={{ scale: 1.05}} transition={{ duration: 0.3}}  className="flex flex-col gap-2 bg-black/10 rounded-xl justify-center items-center">
-                    <img src="/images/gsap.png" alt="gsap" loading="lazy" width={50} height={50} className="rounded"/>
+                    <img src="/images/gsap.svg" alt="gsap" loading="lazy" width={50} height={50} className="rounded"/>
                     <p className={`text-center text-${color}`}>GSAP</p>
                   </motion.div>
 
@@ -100,6 +100,11 @@ export default function Skills({color}: {color?: string}) {
                   <motion.div initial={{x:100}} whileInView={{x:0}} whileTap={{ scale: 0.95 }} whileHover={{ scale: 1.05}} transition={{ duration: 0.3}}  className="flex flex-col gap-2 bg-black/10 rounded-xl justify-center items-center">
                     <img src="/images/supabase.svg" alt="supabase" loading="lazy" width={30} height={30} />
                     <p className={`text-center text-${color}`}>Supabase</p>
+                  </motion.div>
+
+                  <motion.div initial={{x:100}} whileInView={{x:0}} whileTap={{ scale: 0.95 }} whileHover={{ scale: 1.05}} transition={{ duration: 0.3}}  className="flex flex-col gap-2 bg-black/10 rounded-xl justify-center items-center">
+                    <img src="/images/vercel.svg" alt="vercel" loading="lazy" width={30} height={30} />
+                    <p className={`text-center text-${color}`}>Vercel</p>
                   </motion.div>
                 </div>
      

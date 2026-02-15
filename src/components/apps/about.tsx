@@ -4,11 +4,11 @@ export default function About() {
   return (
     <>
       <div className="flex flex-col gap-2 overflow-y-hidden">
-        <motion.div initial={{ y: -100 }} whileInView={{ y: 0 }} transition={{ type: "spring", stiffness: 100 }} className="flex justify-center gap-2 items-center bg-black/10 p-4 rounded-4xl">
+        <motion.div initial={{ y: -100 }} whileInView={{ y: 0 }} transition={{ type: "spring", stiffness: 45 }} className="flex justify-center gap-2 items-center bg-black/10 p-4 rounded-4xl">
           <motion.img
           whileHover={{ scale: 1.1 }}
           whileTap={{ scale: 1.1 }}
-            src="../../public/images/me.webp"
+            src="/images/me.webp"
             alt="me"
             width={80}
             className="bg-white rounded-full"
@@ -16,7 +16,7 @@ export default function About() {
           <p className="text-center "> CHIDUBEM PAUL OGBU</p>
         </motion.div>
 
-        <motion.div initial={{ y: 200 }} whileInView={{ y: 0 }} transition={{ type: "spring", stiffness: 100 }} className="rounded-2xl w-full bg-black/10 p-4 mb-2">
+        <motion.div initial={{ y: 200 }} whileInView={{ y: 0 }} transition={{ type: "spring", stiffness: 45 }} className="rounded-2xl w-full bg-black/10 p-4 mb-2">
           <p>
             I help startups and businesses build <strong>modern</strong>, <strong>scalable web
             applications</strong>. <br /> As a <strong>full-stack developer</strong> specializing in <strong>TypeScript</strong>,

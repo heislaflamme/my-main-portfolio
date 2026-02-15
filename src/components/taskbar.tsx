@@ -343,7 +343,7 @@ export default function Taskbar({children}: {children: React.ReactNode}) {
                   />
                 </button>
               </div>
-              <div className="relative overflow-y-auto h-full">
+              <div className="relative overflow-y-auto p-4 h-full">
                 <Projects/>
               </div>
             </motion.div>

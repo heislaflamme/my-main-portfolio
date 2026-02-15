@@ -10,11 +10,13 @@
   },
   "dependencies": {
     "@astrojs/react": "^4.4.2",
+    "@astrojs/sitemap": "^3.7.0",
     "@gsap/react": "^2.1.2",
     "@tailwindcss/vite": "^4.1.18",
     "@types/react": "^19.2.13",
     "@types/react-dom": "^19.2.3",
     "astro": "^5.17.1",
+    "astro-webmanifest": "^1.0.0",
     "framer-motion": "^12.33.0",
     "gsap": "^3.14.2",
     "motion": "^12.34.0",

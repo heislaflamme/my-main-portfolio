@@ -152,7 +152,7 @@ export default function Mobile() {
               initial={{ y: 50 }}
               animate={{ y: 0 }}
               exit={{ scale: 0, opacity: 0 }}
-              className="w-[90%] h-[85%] flex flex-col p-4 absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 z-30 windows-app-bg rounded-xl"
+              className="w-[90%] h-[85%] flex flex-col px-4 pt-4 pb-[10%] absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 z-30 windows-app-bg rounded-xl"
             >
               <div>
                 <img src="/images/gallery.png" alt="projects" width={30} height={30} className="absolute top-[-6%] rounded-full" />
@@ -179,7 +179,7 @@ export default function Mobile() {
               initial={{ y: 50 }}
               animate={{ y: 0 }}
               exit={{ scale: 0, opacity: 0 }}
-              className="w-[90%] h-[85%] p-4 flex flex-col absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 z-30 windows-app-bg rounded-xl"
+              className="w-[90%] h-[85%] px-4 pt-4 pb-[10%] flex flex-col absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 z-30 windows-app-bg rounded-xl"
             >
               <div>
                 <img src="/images/android_word.png" alt="about me" width={30} height={30} className="absolute top-[-6%] rounded-full" />
@@ -205,7 +205,7 @@ export default function Mobile() {
               initial={{ y: 50 }}
               animate={{ y: 0 }}
               exit={{ scale: 0, opacity: 0 }}
-              className="w-[90%] h-[85%] flex flex-col p-4 absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 z-30 windows-app-bg rounded-xl"
+              className="w-[90%] h-[85%] flex flex-col px-4 pt-4 pb-[10%] absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 z-30 windows-app-bg rounded-xl"
             >
               <div>
                 <img src="/images/messages.png" alt="services" width={30} height={30} className="absolute top-[-6%] rounded-full" />
