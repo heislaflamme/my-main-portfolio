@@ -3,8 +3,8 @@ import { motion } from "framer-motion";
 export default function About() {
   return (
     <>
-      <div className="flex flex-col gap-2 overflow-y-hidden">
-        <motion.div initial={{ y: -100 }} whileInView={{ y: 0 }} transition={{ type: "spring", stiffness: 45 }} className="flex justify-center gap-2 items-center bg-black/10 p-4 rounded-4xl">
+      <div className="flex flex-col gap-2 overflow-hidden">
+        <motion.div initial={{ x: -100 }} whileInView={{ x: 0 }} transition={{ type: "spring", stiffness: 45 }} className="flex justify-center gap-2 items-center bg-black/10 p-4 rounded-4xl">
           <motion.img
           whileHover={{ scale: 1.1 }}
           whileTap={{ scale: 1.1 }}
