@@ -7,6 +7,8 @@ import tailwindcss from '@tailwindcss/vite';
 
 import sitemap from '@astrojs/sitemap';
 
+import { ViteImageOptimizer } from 'vite-plugin-image-optimizer';
+
 import webmanifest from 'astro-webmanifest';
 
 // https://astro.build/config
@@ -17,9 +19,28 @@ export default defineConfig({
       name: 'Chidubem - Full stack web developer',
       icon: 'src/images/icon.png',
     }
-  )],
+  ),
+],
 
   vite: {
-    plugins: [tailwindcss()]
+    plugins: [tailwindcss(), ViteImageOptimizer({
+        
+        includePublic: true,
+
+        png: {
+          quality: 75, // Reduce quality
+        },
+        jpeg: {
+          quality: 75,
+        },
+        jpg: {
+          quality: 75,
+        },
+        webp: {
+          quality: 75,
+          lossless: false, // Enable lossy compression
+        },
+
+      }),]
   }
 });
