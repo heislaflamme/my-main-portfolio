@@ -3,7 +3,7 @@ import type React from "react";
 
 
 
-export default function App({className, onClick, children, style}: { className?: string, onClick?: React.MouseEventHandler, children?: React.ReactNode, style?: React.CSSProperties }) {
+export default function App({className, onClick, drag, dragConstraints, children, style}: { className?: string, onClick?: React.MouseEventHandler, children?: React.ReactNode, style?: React.CSSProperties, drag?: boolean, dragConstraints?: object }) {
 
 
   return (
@@ -11,7 +11,9 @@ export default function App({className, onClick, children, style}: { className?:
     <motion.div 
         className={`${className}`}
         style={style} 
-        whileTap={{scale: 0.9}}
+        dragConstraints={dragConstraints}
+        drag={drag}
+        whileTap={{scale: 0.8}}
         transition={{ type: "spring", stiffness: 400, damping: 20}}
         onClick={onClick}>
       {children}

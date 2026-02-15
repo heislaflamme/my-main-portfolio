@@ -1,10 +1,43 @@
 @import "tailwindcss";
 
-.bg {
+
+@font-face {
+  font-family: "spaceFont"; 
+  src: url("/fonts/Astromeda.ttf") format("truetype");
+  font-display: swap;
+}
+@font-face {
+  font-family: "handwritten"; 
+  src: url("/fonts/LonelyStudy.otf") format("opentype");
+  font-display: swap;
+}
+.skills{
+  display: grid;
+  grid-template-columns: repeat(auto-fit, 120px);
+  justify-content: center;
+  overflow-y: auto;
+  overflow-x: hidden;
+  grid-auto-rows: 120px;
+  gap: 5px;
+}
+html,body{
+  background-color: #068599;
+}
+.modal{
+  background: transparent;
+  backdrop-filter: blur(20px);
+}
+.desktop-bg {
   background-image: url("/images/windows.jpg");
   background-repeat: no-repeat;
   background-size: cover;
-  background-position: center; /* Centers the image in the container */
+  background-position: center; 
+}
+.mobile-bg {
+  background-image: url("/images/mobile-bg.webp");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center; 
 }
 .windows-white-bg{
     background-color: rgba(255, 255, 255, 0.644);
@@ -19,4 +52,14 @@
 .windows-app-bg{
     background-color: rgba(255, 255, 255, 0.644);
     backdrop-filter: blur(10px);
+}
+.hero-text, .mobile-hero-text{
+    font-family: "spaceFont", sans-serif;
+    text-shadow: 2px 2px 4px rgb(0, 0, 0);
+}
+.hero-p{
+    font-family: "handwritten", cursive;
+}
+h1, p{
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
