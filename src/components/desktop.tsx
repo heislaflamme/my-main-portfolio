@@ -79,27 +79,27 @@ export default function Desktop() {
         <>
        <div className="flex flex-col gap-3">
 			<a target="_blank" rel="noopener noreferrer" href="/docs/resume.docx" className="hover-white cursor-pointer active:scale-[0.9] transition-all duration-300 w-20 flex flex-col justify-center p-2 rounded">
-				<img src="/images/word.png" alt="resume" height={50} width={50} className="m-auto"/>
+				<img loading="eager" src="/images/word.png" alt="resume" height={50} width={50} className="m-auto"/>
 				<p className="text-[15px] px-2 pt-1 text-center w-full">Resume</p>
 			</a>
 
 			<a target="_blank" rel="noopener noreferrer" href="mailto:emekaogbuchidubem@gmail.com" className="hover-white cursor-pointer active:scale-[0.9] transition-all duration-300 w-20 flex flex-col justify-center p-2 rounded">
-				<img src="/images/gmail.svg" alt="Desktop Background" height={45} width={45} className="m-auto"/>
+				<img loading="eager" src="/images/gmail.svg" alt="Desktop Background" height={45} width={45} className="m-auto"/>
 				<p className="text-[15px] px-2 pt-1 text-center w-full">Mail</p>
 			</a>
 
 			<a target="_blank" rel="noopener noreferrer" href="https://www.linkedin.com/in/emekaogbuchidubem/" className="hover-white cursor-pointer active:scale-[0.9] transition-all duration-300 w-20 flex flex-col justify-center p-2 rounded">
-				<img src="/images/linkedin.svg" alt="Desktop Background" height={45} width={45} className="m-auto"/>
+				<img loading="eager" src="/images/linkedin.svg" alt="Desktop Background" height={45} width={45} className="m-auto"/>
 				<p className="text-[15px] px-2 pt-1 text-center w-full">LinkedIn</p>
 			</a>
 
 			<a target="_blank" rel="noopener noreferrer" href="https://t.me/heislaflame" className="hover-white cursor-pointer active:scale-[0.9] transition-all duration-300 w-20 flex flex-col justify-center p-2 rounded">
-				<img src="/images/telegram.svg" alt="Desktop Background" height={45} width={45} className="m-auto"/>
+				<img loading="eager" src="/images/telegram.svg" alt="Desktop Background" height={45} width={45} className="m-auto"/>
 				<p className="text-[15px] px-2 pt-1 text-center w-full">Telegram</p>
 			</a>
 
 			<a target="_blank" rel="noopener noreferrer" href="https://x.com/heislaflame" className="hover-white cursor-pointer active:scale-[0.9] transition-all duration-300 w-20 flex flex-col justify-center p-2 rounded">
-				<img src="/images/x.svg" alt="Desktop Background" height={45} width={45} className="m-auto rounded"/>
+				<img loading="eager" src="/images/x.svg" alt="Desktop Background" height={45} width={45} className="m-auto rounded"/>
 				<p className="text-[15px] px-2 pt-1 text-center w-full">Twitter</p>
 			</a>
 

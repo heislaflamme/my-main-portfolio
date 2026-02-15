@@ -181,7 +181,7 @@ export default function Taskbar({children}: {children: React.ReactNode}) {
             >
               <div className="relative flex gap-4 w-full border-b border-b-black/20 rounded-t flex-row-reverse p-2 titlebar2 cursor-grab active:cursor-grabbing">
                 <div className="absolute w-full flex gap-2 pl-3">
-                  <img src="/images/file_explorer.png" alt="skills" width={25} height={25} />
+                  <img loading="lazy" src="/images/file_explorer.png" alt="skills" width={25} height={25} />
                   <p>Skills</p>
                 </div>
                 <button
@@ -194,7 +194,7 @@ export default function Taskbar({children}: {children: React.ReactNode}) {
                     CloseAll();
                   }}
                 >
-                  <img
+                  <img loading="lazy"
                     src="/images/exit.svg"
                     alt="exit button"
                     width={16}
@@ -209,7 +209,7 @@ export default function Taskbar({children}: {children: React.ReactNode}) {
                     setIsApp2Maximized(!isApp2Maximized);
                   }}
                 >
-                  <img
+                  <img loading="lazy"
                     src="/images/maximize.svg"
                     alt="maximize button"
                     width={13}
@@ -226,7 +226,7 @@ export default function Taskbar({children}: {children: React.ReactNode}) {
                     CloseAll();
                   }}
                 >
-                  <img
+                  <img loading="lazy"
                     src="/images/minimize.svg"
                     alt="minimize button"
                     width={20}
@@ -290,7 +290,7 @@ export default function Taskbar({children}: {children: React.ReactNode}) {
             >
               <div className="relative flex gap-4 w-full border-b border-b-black/20 rounded-t flex-row-reverse p-2 titlebar2 cursor-grab active:cursor-grabbing">
                 <div className="absolute w-full flex gap-2 pl-3">
-                  <img src="/images/acknowledgment.png" alt="Projects" width={25} height={25} />
+                  <img loading="lazy" src="/images/acknowledgment.png" alt="Projects" width={25} height={25} />
                   <p>Projects</p>
                 </div>
                 <button
@@ -303,7 +303,7 @@ export default function Taskbar({children}: {children: React.ReactNode}) {
                     CloseAll();
                   }}
                 >
-                  <img
+                  <img loading="lazy"
                     src="/images/exit.svg"
                     alt="exit button"
                     width={16}
@@ -318,7 +318,7 @@ export default function Taskbar({children}: {children: React.ReactNode}) {
                     setIsApp3Maximized(!isApp3Maximized);
                   }}
                 >
-                  <img
+                  <img loading="lazy"
                     src="/images/maximize.svg"
                     alt="maximize button"
                     width={13}
@@ -334,7 +334,7 @@ export default function Taskbar({children}: {children: React.ReactNode}) {
                     CloseAll();
                   }}
                 >
-                  <img
+                  <img loading="lazy"
                     src="/images/minimize.svg"
                     alt="minimize button"
                     width={20}
@@ -398,7 +398,7 @@ export default function Taskbar({children}: {children: React.ReactNode}) {
             >
               <div className="relative flex gap-4 w-full border-b border-b-black/20 rounded-t flex-row-reverse p-2 titlebar2 cursor-grab active:cursor-grabbing">
                 <div className="absolute w-full flex gap-2 pl-3">
-                  <img src="/images/msword.png" alt="about me" width={40} height={40} />
+                  <img loading="lazy" src="/images/msword.png" alt="about me" width={40} height={40} />
                   <p>About me</p>
                 </div>
                 <button
@@ -411,7 +411,7 @@ export default function Taskbar({children}: {children: React.ReactNode}) {
                     CloseAll();
                   }}
                 >
-                  <img
+                  <img loading="lazy"
                     src="/images/exit.svg"
                     alt="exit button"
                     width={16}
@@ -426,7 +426,7 @@ export default function Taskbar({children}: {children: React.ReactNode}) {
                     setIsApp4Maximized(!isApp4Maximized);
                   }}
                 >
-                  <img
+                  <img loading="lazy"
                     src="/images/maximize.svg"
                     alt="maximize button"
                     width={13}
@@ -443,7 +443,7 @@ export default function Taskbar({children}: {children: React.ReactNode}) {
                     CloseAll();
                   }}
                 >
-                  <img
+                  <img loading="lazy"
                     src="/images/minimize.svg"
                     alt="minimize button"
                     width={20}
@@ -507,7 +507,7 @@ export default function Taskbar({children}: {children: React.ReactNode}) {
             >
               <div className="relative flex gap-4 w-full border-b border-b-black/20 rounded-t flex-row-reverse p-2 titlebar2 cursor-grab active:cursor-grabbing">
                 <div className="absolute w-full flex gap-2 pl-3">
-                  <img src="/images/comments.png" alt="services" width={20} height={20} />
+                  <img loading="lazy" src="/images/comments.png" alt="services" width={20} height={20} />
                   <p>Services</p>
                 </div>
                 <button
@@ -520,7 +520,7 @@ export default function Taskbar({children}: {children: React.ReactNode}) {
                     CloseAll();
                   }}
                 >
-                  <img
+                  <img loading="lazy"
                     src="/images/exit.svg"
                     alt="exit button"
                     width={16}
@@ -535,7 +535,7 @@ export default function Taskbar({children}: {children: React.ReactNode}) {
                     setIsApp5Maximized(!isApp5Maximized);
                   }}
                 >
-                  <img
+                  <img loading="lazy"
                     src="/images/maximize.svg"
                     alt="maximize button"
                     width={13}
@@ -552,7 +552,7 @@ export default function Taskbar({children}: {children: React.ReactNode}) {
                     CloseAll();
                   }}
                 >
-                  <img
+                  <img loading="lazy"
                     src="/images/minimize.svg"
                     alt="minimize button"
                     width={20}
@@ -572,7 +572,7 @@ export default function Taskbar({children}: {children: React.ReactNode}) {
       <div className="windows-white-bg fixed bottom-0 h-13 gap-5 items-center w-full flex justify-center z-50">
         <a href="/">
           <App className="h-10 w-10 cursor-pointer rounded flex justify-center items-center hover-white">
-            <img
+            <img loading="eager"
               src="/images/Windows.png"
               alt="Windows Icon"
               width={30}
@@ -594,7 +594,7 @@ export default function Taskbar({children}: {children: React.ReactNode}) {
             if (!isSearchOpen) setSearchZIndex(getMaxZIndex() + 1); 
           }}
         >
-          <img
+          <img loading="eager"
             src="/images/search.svg"
             alt="Search Icon"
             width={20}
@@ -622,7 +622,7 @@ export default function Taskbar({children}: {children: React.ReactNode}) {
             } 
           }}
         >
-          <img
+          <img loading="eager"
             src="/images/file_explorer.png"
             alt="about me"
             width={30}
@@ -652,7 +652,7 @@ export default function Taskbar({children}: {children: React.ReactNode}) {
             } 
           }}
         >
-          <img
+          <img loading="eager"
             src="/images/acknowledgment.png"
             alt="projects"
             width={30}
@@ -683,7 +683,7 @@ export default function Taskbar({children}: {children: React.ReactNode}) {
             } 
           }}
         >
-          <img
+          <img loading="eager"
             src="/images/msword.png"
             alt="about me"
             width={60}
@@ -714,7 +714,7 @@ export default function Taskbar({children}: {children: React.ReactNode}) {
             } 
           }}
         >
-          <img
+          <img loading="eager"
             src="/images/comments.png"
             alt="my services"
             width={30}
@@ -729,21 +729,21 @@ export default function Taskbar({children}: {children: React.ReactNode}) {
 
         <div className="absolute right-0 flex gap-3">
           <div className="flex py-3 gap-2">
-            <img
+            <img loading="eager"
             src="/images/wifi.svg"
             alt="wifi"
             width={20}
             height={20}
             className="invert"
           />
-          <img
+          <img loading="eager"
             src="/images/speaker.svg"
             alt="speaker"
             width={20}
             height={20}
             className="invert"
           />
-          <img
+          <img loading="eager"
             src="/images/battery.svg"
             alt="battery"
             width={20}

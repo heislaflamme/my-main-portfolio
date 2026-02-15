@@ -5,14 +5,18 @@ export default function About() {
     <>
       <div className="flex flex-col gap-2 overflow-hidden">
         <motion.div initial={{ x: -40 }} whileInView={{ x: 0 }} transition={{ type: "spring", stiffness: 45 }} className="flex justify-center gap-2 items-center bg-black/10 p-4 rounded-4xl">
+          <div className="w-20 h-20 rounded-full relative">
           <motion.img
+          loading="lazy"
           whileHover={{ scale: 1.1 }}
           whileTap={{ scale: 1.1 }}
             src="/images/me.webp"
             alt="me"
             width={80}
+            height={80}
             className="bg-white rounded-full"
           />
+          </div>
           <p className="text-center "> CHIDUBEM PAUL OGBU</p>
         </motion.div>
 

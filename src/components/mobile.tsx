@@ -130,7 +130,7 @@ export default function Mobile() {
               className="w-[90%] h-[85%] pt-4 px-4 pb-[10%] absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 z-30 windows-app-bg rounded-xl flex flex-col"
             >
               <div>
-                <img src="/images/files.png" alt="skills" width={30} height={30} className="absolute top-[-6%] rounded-full" />
+                <img loading="lazy" src="/images/files.png" alt="skills" width={30} height={30} className="absolute top-[-6%] rounded-full" />
               </div>
               <div className="overflow-y-auto">
                 <h1 className={`text-center max-[360px]:text-[15px] min-[700px]:text-2xl`}>MY TECH STACK</h1>
@@ -155,7 +155,7 @@ export default function Mobile() {
               className="w-[90%] h-[85%] flex flex-col px-4 pt-4 pb-[10%] absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 z-30 windows-app-bg rounded-xl"
             >
               <div>
-                <img src="/images/gallery.png" alt="projects" width={30} height={30} className="absolute top-[-6%] rounded-full" />
+                <img loading="lazy" src="/images/gallery.png" alt="projects" width={30} height={30} className="absolute top-[-6%] rounded-full" />
               </div>
               
               <div className="overflow-y-auto">
@@ -182,7 +182,7 @@ export default function Mobile() {
               className="w-[90%] h-[85%] px-4 pt-4 pb-[10%] flex flex-col absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 z-30 windows-app-bg rounded-xl"
             >
               <div>
-                <img src="/images/android_word.png" alt="about me" width={30} height={30} className="absolute top-[-6%] rounded-full" />
+                <img loading="lazy" src="/images/android_word.png" alt="about me" width={30} height={30} className="absolute top-[-6%] rounded-full" />
               </div>
               
               <div className="overflow-y-auto">
@@ -208,7 +208,7 @@ export default function Mobile() {
               className="w-[90%] h-[85%] flex flex-col px-4 pt-4 pb-[10%] absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 z-30 windows-app-bg rounded-xl"
             >
               <div>
-                <img src="/images/messages.png" alt="services" width={30} height={30} className="absolute top-[-6%] rounded-full" />
+                <img loading="lazy" src="/images/messages.png" alt="services" width={30} height={30} className="absolute top-[-6%] rounded-full" />
               </div>
 
               <div className="overflow-y-auto">
@@ -221,21 +221,21 @@ export default function Mobile() {
 
         <div className="relative w-full p-2">
           <div className="absolute flex gap-1 right-0 mr-5">
-            <img
+            <img loading="eager"
               src="/images/wifi.svg"
               alt="wifi"
               width={15}
               height={15}
               className=""
             />
-            <img
+            <img loading="eager"
               src="/images/cellular-data.svg"
               alt="cellular"
               width={15}
               height={15}
               className=""
             />
-            <img
+            <img loading="eager"
               src="/images/battery.svg"
               alt="battery"
               width={15}
@@ -292,7 +292,7 @@ export default function Mobile() {
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                <motion.img initial={{y: 500}} width={80} height={80} animate={{y: 0}} transition={{ duration: 1, delay: 0.2 }} src="/images/gmail.svg" alt="mail" />
+                <motion.img loading="eager" initial={{y: 500}} width={80} height={80} animate={{y: 0}} transition={{ duration: 1, delay: 0.2 }} src="/images/gmail.svg" alt="mail" />
               </a>
             </App>
 
@@ -302,7 +302,7 @@ export default function Mobile() {
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                <motion.img initial={{y: 500}} width={80} height={80} animate={{y: 0}} transition={{ duration: 1, delay: 0.1 }} src="/images/linkedin.svg" alt="linkedin" />
+                <motion.img loading="eager" initial={{y: 500}} width={80} height={80} animate={{y: 0}} transition={{ duration: 1, delay: 0.1 }} src="/images/linkedin.svg" alt="linkedin" />
               </a>
             </App>
 
@@ -312,7 +312,7 @@ export default function Mobile() {
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                <motion.img initial={{y: 500}} width={80} height={80} animate={{y: 0}} transition={{ duration: 1}}
+                <motion.img loading="eager" initial={{y: 500}} width={80} height={80} animate={{y: 0}} transition={{ duration: 1}}
                   src="/images/x.svg"
                   alt="twitter/x"
                   className="rounded-2xl"
@@ -326,7 +326,7 @@ export default function Mobile() {
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                <motion.img initial={{y: 500}} width={80} height={80} animate={{y: 0}} transition={{ duration: 1, delay: 0.1 }} src="/images/telegram.svg" alt="telegram" />
+                <motion.img loading="eager" initial={{y: 500}} width={80} height={80} animate={{y: 0}} transition={{ duration: 1, delay: 0.1 }} src="/images/telegram.svg" alt="telegram" />
               </a>
             </App>
 
@@ -336,7 +336,7 @@ export default function Mobile() {
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                <motion.img initial={{y: 500}} width={80} height={80} animate={{y: 0}} transition={{ duration: 1, delay: 0.2 }} src="/images/word.png" alt="resume" />
+                <motion.img loading="eager" initial={{y: 500}} width={80} height={80} animate={{y: 0}} transition={{ duration: 1, delay: 0.2 }} src="/images/word.png" alt="resume" />
               </a>
             </App>
           </div>
@@ -348,7 +348,7 @@ export default function Mobile() {
                 setIsApp1Open(true);
               }}
             >
-              <motion.img initial={{y: 500}} width={80} height={80} animate={{y: 0}} transition={{ duration: 1, delay: 0.1 }}
+              <motion.img loading="eager" initial={{y: 500}} width={80} height={80} animate={{y: 0}} transition={{ duration: 1, delay: 0.1 }}
                 src="/images/files.png"
                 alt="skills"
                 className="rounded-4xl"
@@ -361,7 +361,7 @@ export default function Mobile() {
                 setIsApp2Open(true);
               }}
             >
-              <motion.img initial={{y: 500}} width={80} height={80} animate={{y: 0}} transition={{ duration: 1, delay: 0 }} src="/images/gallery.png" alt="projects" />
+              <motion.img loading="eager" initial={{y: 500}} width={80} height={80} animate={{y: 0}} transition={{ duration: 1, delay: 0 }} src="/images/gallery.png" alt="projects" />
             </App>
 
             <App drag dragConstraints={{ top: 0, left: 0, right: 0, bottom: 0}}
@@ -370,7 +370,7 @@ export default function Mobile() {
                 setIsApp3Open(true);
               }}
             >
-              <motion.img initial={{y: 500}} width={80} height={80} animate={{y: 0}} transition={{ duration: 1, delay: 0 }}
+              <motion.img loading="eager" initial={{y: 500}} width={80} height={80} animate={{y: 0}} transition={{ duration: 1, delay: 0 }}
                 src="/images/android_word.png"
                 alt="about me"
               />
@@ -382,7 +382,7 @@ export default function Mobile() {
                 setIsApp4Open(true);
               }}
             >
-              <motion.img initial={{y: 500}} width={80} height={80} animate={{y: 0}} transition={{ duration: 1, delay: 0.1 }} src="/images/messages.png" alt="services" />
+              <motion.img loading="eager" initial={{y: 500}} width={80} height={80} animate={{y: 0}} transition={{ duration: 1, delay: 0.1 }} src="/images/messages.png" alt="services" />
             </App>
           </div>
         </div>

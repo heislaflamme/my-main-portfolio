@@ -28,16 +28,16 @@ export default defineConfig({
         includePublic: true,
 
         png: {
-          quality: 75, // Reduce quality
+          quality: 50, // Reduce quality
         },
         jpeg: {
-          quality: 75,
+          quality: 50,
         },
         jpg: {
-          quality: 75,
+          quality: 50,
         },
         webp: {
-          quality: 75,
+          quality: 50,
           lossless: false, // Enable lossy compression
         },
 
