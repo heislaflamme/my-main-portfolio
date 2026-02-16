@@ -9,17 +9,11 @@ import sitemap from '@astrojs/sitemap';
 
 import { ViteImageOptimizer } from 'vite-plugin-image-optimizer';
 
-import webmanifest from 'astro-webmanifest';
 
 // https://astro.build/config
 export default defineConfig({
   site: 'https://chidubem.name.ng',
-  integrations: [react(), sitemap(), webmanifest(
-    {
-      name: 'Chidubem - Full stack web developer',
-      icon: '/icon.ico',
-    }
-  ),
+  integrations: [react(), sitemap(),
 ],
 
   vite: {
