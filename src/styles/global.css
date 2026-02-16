@@ -2,16 +2,18 @@
 
 
 @font-face {
-  font-family: "spaceFont"; 
+  font-family: "spaceFont";
   src: url("/fonts/Astromeda.ttf") format("truetype");
   font-display: swap;
 }
+
 @font-face {
-  font-family: "handwritten"; 
+  font-family: "handwritten";
   src: url("/fonts/LonelyStudy.otf") format("opentype");
   font-display: swap;
 }
-.skills{
+
+.skills {
   display: grid;
   grid-template-columns: repeat(auto-fit, 120px);
   justify-content: center;
@@ -20,46 +22,62 @@
   grid-auto-rows: 120px;
   gap: 5px;
 }
-html,body{
+
+html,
+body {
   background-color: #068599;
 }
-.modal{
+
+.modal {
   background: transparent;
   backdrop-filter: blur(20px);
 }
+
 .desktop-bg {
   background-image: url("/images/windows.jpg");
   background-repeat: no-repeat;
   background-size: cover;
-  background-position: center; 
+  background-position: center;
 }
+
 .mobile-bg {
-  background-image: url("/images/mobile-bg.webp");
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: center; 
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  inset: 0;
 }
-.windows-white-bg{
-    background-color: rgba(255, 255, 255, 0.644);
-    backdrop-filter: blur(10px);
+
+.windows-white-bg {
+  background-color: rgba(255, 255, 255, 0.644);
+  backdrop-filter: blur(10px);
 }
-.hover-white:hover{
-        background-color: rgba(255, 255, 255, 0.644);
+
+.hover-white:hover {
+  background-color: rgba(255, 255, 255, 0.644);
 }
-.windows-blue-bg{
-    background-color: rgba(54, 129, 214);
+
+.windows-blue-bg {
+  background-color: rgba(54, 129, 214);
 }
-.windows-app-bg{
-    background-color: rgba(255, 255, 255, 0.644);
-    backdrop-filter: blur(10px);
+
+.windows-app-bg {
+  background-color: rgba(255, 255, 255, 0.644);
+  backdrop-filter: blur(10px);
 }
-.hero-text, .mobile-hero-text{
-    font-family: "spaceFont", sans-serif;
-    text-shadow: 2px 2px 4px rgb(0, 0, 0);
+
+.hero-text,
+.mobile-hero-text {
+  font-family: "spaceFont", sans-serif;
+  text-shadow: 2px 2px 4px rgb(0, 0, 0);
 }
-.hero-p{
-    font-family: "handwritten", cursive;
+
+.hero-p {
+  font-family: "handwritten", cursive;
 }
-h1, p{
+
+h1,
+p {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }

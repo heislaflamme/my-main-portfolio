@@ -95,7 +95,8 @@ export default function Mobile() {
 
   return (
     <>
-      <div className="mobile-bg fixed inset-0 overflow-hidden">
+      <div className="fixed inset-0 overflow-hidden">
+        <img src="/images/mobile-bg.webp" alt="background" loading="eager" className="mobile-bg" />
         <AnimatePresence>
           {(isApp1Open || isApp2Open || isApp3Open || isApp4Open) && (
             <motion.div
