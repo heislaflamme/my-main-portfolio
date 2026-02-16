@@ -17,7 +17,7 @@ export default defineConfig({
   integrations: [react(), sitemap(), webmanifest(
     {
       name: 'Chidubem - Full stack web developer',
-      icon: 'src/images/icon.png',
+      icon: '/icon.ico',
     }
   ),
 ],
