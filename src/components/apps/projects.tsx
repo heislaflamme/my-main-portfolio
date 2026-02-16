@@ -13,7 +13,7 @@ export default function Projects(){
 
                 <motion.div initial={{x: -100}} whileInView={{x:0}} transition={{ duration: 0.5 }} className="bg-black/10 w-75 relative left-1/2 -translate-x-1/2 flex flex-col justify-center rounded-2xl">
                     <div className="p-4 flex flex-col justify-center gap-5">
-                        <a href="http://chidubem.name.ng" target="_blank" rel="noopener noreferrer" className="w-62.5 h-30  m-auto rounded-xl">
+                        <a href="http://chidubem.name.ng" target="_blank" rel="noopener noreferrer" className="w-62.5 h-[113.84] bg-black/40 m-auto rounded-xl">
                         <motion.img loading="lazy" src="/images/Screenshot1.png" whileTap={{ scale: 1.1 }} whileHover={{ scale: 1.1 }} alt="project1" width={250} className=" m-auto rounded-xl hover:shadow-2xl" />
                         </a>
                         <a href="http://chidubem.name.ng" target="_blank" rel="noopener noreferrer" className="text-center hover:text-blue-500">Basic Portfolio Site</a>
@@ -30,7 +30,7 @@ export default function Projects(){
 
                 <motion.div initial={{x: -100}} whileInView={{x:0}} transition={{ duration: 0.5, delay: 0.1}} className="bg-black/10 w-75 relative left-1/2 -translate-x-1/2 rounded-2xl">
                          <div className="p-4 flex flex-col justify-center gap-5">
-                        <a href="http://codnyglobal.com" target="_blank" rel="noopener noreferrer" className="w-62.5 h-30 m-auto rounded-xl">
+                        <a href="http://codnyglobal.com" target="_blank" rel="noopener noreferrer" className="w-62.5 h-[118.16px] bg-black/40 m-auto rounded-xl">
                         <motion.img loading="lazy" src="/images/Screenshot2.png" whileTap={{ scale: 1.1 }} whileHover={{ scale: 1.1 }} alt="project2" width={250} className=" m-auto rounded-xl hover:shadow-2xl" />
                         </a>
                         <a href="http://codnyglobal.com" target="_blank" rel="noopener noreferrer" className="text-center hover:text-blue-500">Company Website</a>

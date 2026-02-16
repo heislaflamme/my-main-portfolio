@@ -14,7 +14,7 @@ export default function About() {
             alt="me"
             width={80}
             height={80}
-            className="bg-white rounded-full"
+            className="bg-black/40 rounded-full"
           />
           </div>
           <p className="text-center "> CHIDUBEM PAUL OGBU</p>
