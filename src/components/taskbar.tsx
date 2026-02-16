@@ -129,7 +129,7 @@ export default function Taskbar({children}: {children: React.ReactNode}) {
             }}
             className="w-[40%] fixed bottom-14 left-1/2 rounded shadow-2xl -translate-x-1/2 h-[85%] windows-white-bg"
           >
-            search
+            <p className="text-center w-full h-full relative top-1/2">Under Construction lmao...⚙️👷</p>
           </motion.div>
         )}
 
