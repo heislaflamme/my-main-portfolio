@@ -125,9 +125,9 @@ export default function Mobile() {
                   setIsApp1Open(false);
                 }
               }}
-              initial={{ y: 50 }}
+              initial={{ y: 100 }}
               animate={{ y: 0 }}
-              exit={{ scale: 0, opacity: 0 }}
+              exit={{ scale: 0, y: 100, opacity: 0 }}
               className="w-[90%] h-[85%] pt-4 px-4 pb-[10%] absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 z-30 windows-app-bg rounded-xl flex flex-col"
             >
               <div>
@@ -150,9 +150,9 @@ export default function Mobile() {
                   setIsApp2Open(false);
                 }
               }}
-              initial={{ y: 50 }}
+              initial={{ y: 100 }}
               animate={{ y: 0 }}
-              exit={{ scale: 0, opacity: 0 }}
+              exit={{ scale: 0, y: 100, opacity: 0 }}
               className="w-[90%] h-[85%] flex flex-col px-4 pt-4 pb-[10%] absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 z-30 windows-app-bg rounded-xl"
             >
               <div>
@@ -177,9 +177,9 @@ export default function Mobile() {
                   setIsApp3Open(false);
                 }
               }}
-              initial={{ y: 50 }}
+              initial={{ y: 100 }}
               animate={{ y: 0 }}
-              exit={{ scale: 0, opacity: 0 }}
+              exit={{ scale: 0, y: 100, opacity: 0 }}
               className="w-[90%] h-[85%] px-4 pt-4 pb-[10%] flex flex-col absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 z-30 windows-app-bg rounded-xl"
             >
               <div>
@@ -203,9 +203,9 @@ export default function Mobile() {
                   setIsApp4Open(false);
                 }
               }}
-              initial={{ y: 50 }}
+              initial={{ y: 100 }}
               animate={{ y: 0 }}
-              exit={{ scale: 0, opacity: 0 }}
+              exit={{ scale: 0, y: 100, opacity: 0 }}
               className="w-[90%] h-[85%] flex flex-col px-4 pt-4 pb-[10%] absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 z-30 windows-app-bg rounded-xl"
             >
               <div>
