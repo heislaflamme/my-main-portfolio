@@ -15,7 +15,7 @@ export default function Services() {
           <strong>Full-Stack Solutions</strong>
           <motion.div initial={{ width: 0}} whileInView={{ width: "100%" }} transition={{ duration: 1}} className="bg-black/50 h-px rounded-4xl"></motion.div>
           <p>Frontend + backend + database. Complete scalable systems. <br />
-          Stack: TypeScript, PostgreSQL, Supabase</p>
+          Stack: TypeScript, PostgreSQL, Supabase, Convex</p>
         </motion.div>
 
         <motion.div initial={{scale: 0.5 }} whileInView={{ scale: 1}} transition={{ duration: 0.5 }} whileHover={{ y: -5 }} className=" bg-black/10 p-4 rounded-2xl">

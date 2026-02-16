@@ -24,12 +24,12 @@ export default function About() {
           <p>
             I help startups and businesses build <strong>modern</strong>, <strong>scalable web
             applications</strong>. <br /> As a <strong>full-stack developer</strong> specializing in <strong>TypeScript</strong>,
-            <strong> React</strong>, and <strong>supabase</strong>, I design and develop applications that are
+            <strong> React</strong>, and <strong>supabase</strong>/<strong>convex</strong>, I design and develop applications that are
             <strong> fast</strong>, <strong>maintainable</strong>, and <strong>built for growth</strong>. <br /> I focus on <strong>clean
             architecture</strong>, <strong>performance optimization</strong>, and <strong>user-centered design</strong> to
             ensure your product doesn’t just work , <strong>it works well</strong>. <br /> If you’re
             looking for a developer to build a website for your projects, I’d be
-            glad to collaborate. <br /> <strong>Let’s build something solid</strong>.
+            glad to collaborate. <br /> <strong>Let’s build something solid!</strong>.
           </p>
         </motion.div>
       </div>

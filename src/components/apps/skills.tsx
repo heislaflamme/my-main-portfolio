@@ -6,7 +6,7 @@ export default function Skills({color}: {color?: string}) {
     return(
         <>
                 <div className="flex justify-center">
-                  <motion.p initial={{opacity: 0.01}} whileInView={{opacity: 1}} viewport={{ once: true }} transition={{ duration: 1}} className={`mt-2 mb-2 text-${color}`}>This website was made using <strong>Astro</strong> to ensure <strong>fast load times</strong>, <strong>better SEO</strong> and <strong>improved website performance</strong>. <br /> <strong>Gsap</strong> and <strong>Framer Motion</strong> where used along side <strong>React</strong> islands to create the beautiful user Interface and user experience you are witnessing. <br /> I make use of modern frameworks, libraries and tools to achieve excellent results. <br /> I am confident in my tech stack and I use it well. <br /> <br />Here is my tech stack:</motion.p>
+                  <motion.p initial={{opacity: 0.01}} whileInView={{opacity: 1}} viewport={{ once: true }} transition={{ duration: 1}} className={`mt-2 mb-2 text-${color}`}>This website was made using <strong>Astro</strong> to ensure <strong>fast load times</strong>, <strong>better SEO</strong> and <strong>improved website performance</strong>. <br /> <strong>Gsap</strong> and <strong>Framer Motion</strong> where used along side <strong>React</strong> islands to create the UI animations on the site. <br /> I make use of modern frameworks, libraries and tools to achieve excellent results. <br /> I am confident in my tech stack and I use it well. <br /> <br />Here is my tech stack:</motion.p>
                 </div>
 
                 <div className=" border border-black/10 skills rounded-2xl p-4 mb-2">
@@ -100,6 +100,11 @@ export default function Skills({color}: {color?: string}) {
                   <motion.div initial={{x:100}} whileInView={{x:0}} whileTap={{ scale: 0.95 }} whileHover={{ scale: 1.05}} transition={{ duration: 0.3}}  className="flex flex-col gap-2 bg-black/10 rounded-xl justify-center items-center">
                     <img src="/images/supabase.svg" alt="supabase" loading="lazy" width={30} height={30} />
                     <p className={`text-center text-${color}`}>Supabase</p>
+                  </motion.div>
+
+                  <motion.div initial={{x:100}} whileInView={{x:0}} whileTap={{ scale: 0.95 }} whileHover={{ scale: 1.05}} transition={{ duration: 0.3}}  className="flex flex-col gap-2 bg-black/10 rounded-xl justify-center items-center">
+                    <img src="/images/convex.svg" alt="convex" loading="lazy" width={30} height={30} />
+                    <p className={`text-center text-${color}`}>Convex</p>
                   </motion.div>
 
                   <motion.div initial={{x:100}} whileInView={{x:0}} whileTap={{ scale: 0.95 }} whileHover={{ scale: 1.05}} transition={{ duration: 0.3}}  className="flex flex-col gap-2 bg-black/10 rounded-xl justify-center items-center">
