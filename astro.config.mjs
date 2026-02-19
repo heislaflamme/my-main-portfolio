@@ -10,9 +10,13 @@ import sitemap from '@astrojs/sitemap';
 import { ViteImageOptimizer } from 'vite-plugin-image-optimizer';
 
 
+import vercel from '@astrojs/vercel';
+
+
 // https://astro.build/config
 export default defineConfig({
   site: 'https://chidubem.name.ng',
+
   integrations: [react(), sitemap(),
 ],
 
@@ -36,5 +40,7 @@ export default defineConfig({
         },
 
       }),]
-  }
+  },
+
+  adapter: vercel(),
 });
