@@ -104,12 +104,12 @@ export default function Desktop() {
 			</a>
 
 			</div>
-			<div className="hero-header flex flex-col absolute w-full gap-5 pointer-events-none h-full justify-center items-center">
-				<header className={`hero-text text-8xl text-white pointer-events-auto ${isReady ? "opacity-100" : "opacity-1"}`}>
+			<div className="hero-header flex flex-col absolute w-full pointer-events-none h-full justify-center items-center">
+				<header className={`hero-text text-[8vw] text-white pointer-events-auto ${isReady ? "opacity-100" : "opacity-1"}`}>
 					HEY I'M CHIDUBEM
 				</header>
-				<motion.p initial={{ opacity: 0.01 }} animate={{ opacity: 1 }} transition={{ delay: 0.5, duration: 1 }} className="hero-p pointer-events-auto hover:scale-[1.05] transition-all duration-200 text-2xl text-white">A full-stack web developer ⚡</motion.p>
-				<motion.p initial={{ opacity: 0.01 }} animate={{ opacity: 1 }} transition={{ delay: 0.5, duration: 1 }} className="hero-p pointer-events-auto hover:scale-[1.05] transition-all duration-200 text-2xl text-white">I turn your ideas into modern, production ready SEO-optimized web applications. 🚀</motion.p>
+				<motion.p initial={{ opacity: 0.01 }} animate={{ opacity: 1 }} transition={{ delay: 0.5, duration: 1 }} className="hero-p pointer-events-auto hover:scale-[1.05] transition-all duration-200 text-[2vw] text-white">A full-stack web developer ⚡</motion.p>
+				<motion.p initial={{ opacity: 0.01 }} animate={{ opacity: 1 }} transition={{ delay: 0.5, duration: 1 }} className="hero-p pointer-events-auto hover:scale-[1.05] transition-all duration-200 text-[2vw] text-white">I turn your ideas into modern, production ready SEO-optimized web applications. 🚀</motion.p>
 			</div>
         </>
     )

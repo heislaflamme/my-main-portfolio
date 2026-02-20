@@ -133,8 +133,8 @@ export default function Mobile() {
               <div>
                 <img loading="lazy" src="/images/files.png" alt="skills" width={30} height={30} className="absolute top-[-6%] rounded-full" />
               </div>
-              <div className="overflow-y-auto">
-                <h1 className={`text-center max-[360px]:text-[15px] min-[700px]:text-2xl`}>MY TECH STACK</h1>
+              <div className="overflow-y[3vw]to">
+                <h1 className={`text-center`}>MY TECH STACK</h1>
               <Skills/>
               </div>
             </motion.div>
@@ -159,8 +159,8 @@ export default function Mobile() {
                 <img loading="lazy" src="/images/gallery.png" alt="projects" width={30} height={30} className="absolute top-[-6%] rounded-full" />
               </div>
               
-              <div className="overflow-y-auto">
-                <h1 className="text-center max-[360px]:text-[15px] min-[700px]:text-2xl">MY WORKS</h1>
+              <div className="overflow-[6vw]uto">
+                <h1 className="text-center">MY WORKS</h1>
               <Projects/>
               </div>
 
@@ -262,7 +262,7 @@ export default function Mobile() {
 
         <div className="hero-header h-[55%] p-2 flex flex-col absolute w-full gap-5 justify-center">
           <header
-            className={`mobile-hero-text text-center text-7xl max-[360px]:text-3xl min-[700px]:text-7xl text-white pointer-events-auto ${isReady ? "opacity-100" : "opacity-1"}`}
+            className={`mobile-hero-text text-center text-[11vw] text-white pointer-events-auto ${isReady ? "opacity-100" : "opacity-1"}`}
           >
             HEY I'M CHIDUBEM
           </header>
@@ -270,7 +270,7 @@ export default function Mobile() {
             initial={{ opacity: 0.01 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.5, duration: 1 }}
-            className="hero-p text-2xl  hover:scale-[1.05] transition-all duration-200 max-[360px]:text-[15px] min-[700px]:text-2xl text-center text-white"
+            className="hero-p text-[6vw]  hover:scale-[1.05] transition-all duration-200 text-center text-white"
           >
             A full-stack web developer ⚡
           </motion.p>
@@ -278,7 +278,7 @@ export default function Mobile() {
             initial={{ opacity: 0.01 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.5, duration: 1 }}
-            className="hero-p text-2xl  hover:scale-[1.05] transition-all duration-200 max-[360px]:text-[15px] min-[700px]:text-2xl text-center text-white"
+            className="hero-p text-[6vw]  hover:scale-[1.05] transition-all duration-200 text-center text-white"
           >
             I turn your ideas into modern, production ready SEO-optimized web
             applications. 🚀
