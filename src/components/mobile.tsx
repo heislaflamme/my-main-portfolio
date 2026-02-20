@@ -133,8 +133,8 @@ export default function Mobile() {
               <div>
                 <img loading="lazy" src="/images/files.png" alt="skills" width={30} height={30} className="absolute top-[-6%] rounded-full" />
               </div>
-              <div className="overflow-y[3vw]to">
-                <h1 className={`text-center`}>MY TECH STACK</h1>
+              <div className="overflow-y-auto">
+                <h1 className={`text-center max-[360px]:text-[15px] min-[700px]:text-2xl`}>MY TECH STACK</h1>
               <Skills/>
               </div>
             </motion.div>
@@ -159,8 +159,8 @@ export default function Mobile() {
                 <img loading="lazy" src="/images/gallery.png" alt="projects" width={30} height={30} className="absolute top-[-6%] rounded-full" />
               </div>
               
-              <div className="overflow-[6vw]uto">
-                <h1 className="text-center">MY WORKS</h1>
+              <div className="overflow-y-auto">
+                <h1 className="text-center max-[360px]:text-[15px] min-[700px]:text-2xl">MY WORKS</h1>
               <Projects/>
               </div>
 
