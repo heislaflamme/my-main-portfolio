@@ -270,7 +270,7 @@ export default function Mobile() {
             initial={{ opacity: 0.01 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.5, duration: 1 }}
-            className="hero-p text-[6vw]  hover:scale-[1.05] transition-all duration-200 text-center text-white"
+            className="hero-p text-[5vw] min-[670px]:text-[3vw]  hover:scale-[1.05] transition-all duration-200 text-center text-white"
           >
             A full-stack web developer ⚡
           </motion.p>
@@ -278,14 +278,14 @@ export default function Mobile() {
             initial={{ opacity: 0.01 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.5, duration: 1 }}
-            className="hero-p text-[6vw]  hover:scale-[1.05] transition-all duration-200 text-center text-white"
+            className="hero-p text-[5vw] min-[670px]:text-[3vw]  hover:scale-[1.05] transition-all duration-200 text-center text-white"
           >
             I turn your ideas into modern, production ready SEO-optimized web
             applications. 🚀
           </motion.p>
         </div>
 
-        <div className="absolute flex flex-col h-[40%] gap-[5%] mb-5 bottom-0 w-full">
+        <div className="absolute flex flex-col h-[40%] gap-[5%] mb-2 bottom-0 w-full">
           <div className="flex justify-around p-2 gap-2">
             <App className="w-20 h-20 hover:scale-[1.05] transition-all duration-200">
               <a
