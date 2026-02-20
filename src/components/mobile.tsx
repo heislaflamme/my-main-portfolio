@@ -1,17 +1,13 @@
 import App from "./app";
-import { lazy, Suspense } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import gsap from "gsap";
 import { SplitText } from "gsap/SplitText";
 import { useGSAP } from "@gsap/react";
 import { useState, useEffect, useRef } from "react";
-
-const Skills = lazy(() => import('./apps/skills'));
-const Projects =  lazy(() => import('./apps/projects'));
-const About = lazy(() => import('./apps/about'));
-const Services = lazy(() => import('./apps/services'));
-
-
+import Skills from "./apps/skills";
+import Projects from "./apps/projects";
+import About from "./apps/about";
+import Services from "./apps/services";
 
 export default function Mobile() {
   const [isApp1Open, setIsApp1Open] = useState(false);
@@ -139,9 +135,7 @@ export default function Mobile() {
               </div>
               <div className="overflow-y-auto">
                 <h1 className={`text-center max-[360px]:text-[15px] min-[700px]:text-2xl`}>MY TECH STACK</h1>
-              <Suspense fallback={null}>
-                <Skills/>
-              </Suspense>
+              <Skills/>
               </div>
             </motion.div>
           )}
@@ -167,9 +161,7 @@ export default function Mobile() {
               
               <div className="overflow-y-auto">
                 <h1 className="text-center max-[360px]:text-[15px] min-[700px]:text-2xl">MY WORKS</h1>
-              <Suspense fallback={null}>
-                <Projects/>
-              </Suspense>
+              <Projects/>
               </div>
 
             </motion.div>
@@ -196,9 +188,7 @@ export default function Mobile() {
               
               <div className="overflow-y-auto">
                 <h1 className="text-center max-[360px]:text-[15px] m-4 min-[700px]:text-2xl">ABOUT ME</h1>
-                <Suspense fallback={null}>
                 <About/>
-              </Suspense>
               </div>
             </motion.div>
           )}
@@ -224,9 +214,7 @@ export default function Mobile() {
 
               <div className="overflow-y-auto">
                 <h1 className="text-center max-[360px]:text-[15px] m-4 min-[700px]:text-2xl">My Services</h1>
-                <Suspense fallback={null}>
                 <Services/>
-              </Suspense>
               </div>
             </motion.div>
           )}

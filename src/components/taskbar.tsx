@@ -1,12 +1,11 @@
-import React, { useState, lazy, Suspense, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import App from "./app.tsx";
 import { motion, AnimatePresence } from "framer-motion";
 import { Rnd } from "react-rnd";
-
-const Skills = lazy(() => import('./apps/skills'));
-const Projects =  lazy(() => import('./apps/projects'));
-const About = lazy(() => import('./apps/about'));
-const Services = lazy(() => import('./apps/services'));
+import Skills from "./apps/skills.tsx";
+import Projects from "./apps/projects.tsx";
+import About from "./apps/about.tsx";
+import Services from "./apps/services.tsx";
 
 export default function Taskbar({children}: {children: React.ReactNode}) {
 
@@ -237,9 +236,7 @@ export default function Taskbar({children}: {children: React.ReactNode}) {
                 </button>
               </div>
               <div className="overflow-auto p-3">
-                <Suspense fallback={null}>
-                  <Skills/>
-                </Suspense>
+                <Skills/>
               </div>
             </motion.div>
           </Rnd>
@@ -347,9 +344,7 @@ export default function Taskbar({children}: {children: React.ReactNode}) {
                 </button>
               </div>
               <div className="relative overflow-y-auto p-4 h-full">
-                <Suspense fallback={null}>
-                  <Projects/>
-                </Suspense>
+                <Projects/>
               </div>
             </motion.div>
           </Rnd>
@@ -458,9 +453,7 @@ export default function Taskbar({children}: {children: React.ReactNode}) {
                 </button>
               </div>
               <div className="flex-1 p-4 overflow-y-auto">
-                <Suspense fallback={null}>
-                  <About/>
-                </Suspense>
+                <About/>
               </div>
             </motion.div>
           </Rnd>
@@ -569,9 +562,7 @@ export default function Taskbar({children}: {children: React.ReactNode}) {
                 </button>
               </div>
               <div className="flex-1 p-4 overflow-y-auto">
-                <Suspense fallback={null}>
                   <Services/>
-                </Suspense>
               </div>
             </motion.div>
           </Rnd>
