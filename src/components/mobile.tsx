@@ -119,9 +119,9 @@ export default function Mobile() {
           )}
           {
             notification && (
-              <motion.div key="notification" initial={{x: 3000}} animate={{x:0}} exit={{x: 3000}} transition={{ duration: 2.5}} drag dragConstraints={{ top: 10, bottom: 10, left: 10, right: 10 }} className="absolute z-100 p-2 flex  gap-1 flex-col justify-center windows-white-bg right-0 top-[5%] mr-4 mt-4 rounded-2xl">
-              <p className="text-center">Tip💡 <br /> Swipe up or sideways to close apps <br />  Tap outside to exit </p>
-              <span onClick={() => setNotification(false)} className="bg-yellow-300 active:bg-yellow-500 p-1 text-center rounded-2xl opacity-100 cursor-pointer">Got it!</span>
+              <motion.div key="notification" initial={{x: 3000}} animate={{x:0}} exit={{x: 3000, scale: [1,1.2,1]}} transition={{ duration: 2.5}} drag dragConstraints={{ top: 10, bottom: 10, left: 10, right: 10 }} className="absolute z-100 p-2 flex  gap-1 flex-col justify-center windows-white-bg right-0 top-[5%] mr-4 mt-4 rounded-2xl">
+              <p className="text-center">Tip💡 <br /> drag up or sideways to close apps <br />  Tap outside apps to exit </p>
+              <motion.span animate={{scale: [1,1.05,1]}} transition={{ repeat: Infinity, duration: 1.5}} onClick={() => setNotification(false)} className="bg-yellow-300 active:bg-yellow-500 p-1 text-center rounded-2xl opacity-100 cursor-pointer">Got it!</motion.span>
               </motion.div>
             )
           }
@@ -138,8 +138,9 @@ export default function Mobile() {
               initial={{ y: 100 }}
               animate={{ y: 0 }}
               exit={{ scale: 0, y: 100, opacity: 0 }}
-              className="w-[90%] h-[85%] pt-4 px-4 pb-[10%] absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 z-30 windows-app-bg rounded-xl flex flex-col"
+              className="w-[90%] h-[85%] pt-4 px-4 pb-12 absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 z-30 windows-app-bg rounded-xl flex flex-col"
             >
+              <div className="absolute bottom-0 left-0 right-0 h-12 z-30  bg-transparent border-t-black/30 border-t rounded-b-xl" />
               <div>
                 <img loading="lazy" src="/images/files.png" alt="skills" width={30} height={30} className="absolute top-[-6%] rounded-full" />
               </div>
@@ -163,8 +164,9 @@ export default function Mobile() {
               initial={{ y: 100 }}
               animate={{ y: 0 }}
               exit={{ scale: 0, y: 100, opacity: 0 }}
-              className="w-[90%] h-[85%] flex flex-col px-4 pt-4 pb-[10%] absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 z-30 windows-app-bg rounded-xl"
+              className="w-[90%] h-[85%] flex flex-col px-4 pt-4 pb-12 absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 z-30 windows-app-bg rounded-xl"
             >
+              <div className="absolute bottom-0 left-0 right-0 h-12 z-30  bg-transparent border-t-black/30 border-t rounded-b-xl" />
               <div>
                 <img loading="lazy" src="/images/gallery.png" alt="projects" width={30} height={30} className="absolute top-[-6%] rounded-full" />
               </div>
@@ -190,8 +192,9 @@ export default function Mobile() {
               initial={{ y: 100 }}
               animate={{ y: 0 }}
               exit={{ scale: 0, y: 100, opacity: 0 }}
-              className="w-[90%] h-[85%] px-4 pt-4 pb-[10%] flex flex-col absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 z-30 windows-app-bg rounded-xl"
+              className="w-[90%] h-[85%] px-4 pt-4 pb-12 flex flex-col absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 z-30 windows-app-bg rounded-xl"
             >
+              <div className="absolute bottom-0 left-0 right-0 h-12 z-30  bg-transparent border-t-black/30 border-t rounded-b-xl" />
               <div>
                 <img loading="lazy" src="/images/android_word.png" alt="about me" width={30} height={30} className="absolute top-[-6%] rounded-full" />
               </div>
@@ -216,8 +219,9 @@ export default function Mobile() {
               initial={{ y: 100 }}
               animate={{ y: 0 }}
               exit={{ scale: 0, y: 100, opacity: 0 }}
-              className="w-[90%] h-[85%] flex flex-col px-4 pt-4 pb-[10%] absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 z-30 windows-app-bg rounded-xl"
+              className="w-[90%] h-[85%] flex flex-col px-4 pt-4 pb-12 absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 z-30 windows-app-bg rounded-xl"
             >
+              <div className="absolute bottom-0 left-0 right-0 h-12 z-30  bg-transparent border-t-black/30 border-t rounded-b-xl" />
               <div>
                 <img loading="lazy" src="/images/messages.png" alt="services" width={30} height={30} className="absolute top-[-6%] rounded-full" />
               </div>
