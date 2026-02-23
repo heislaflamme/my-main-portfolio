@@ -119,7 +119,7 @@ export default function Mobile() {
           )}
           {
             notification && (
-              <motion.div initial={{x: 3000}} animate={{x:0}} exit={{x: 3000}} transition={{ duration: 2.5}} drag dragConstraints={{ top: 10, bottom: 10, left: 10, right: 10 }} className="absolute z-100 p-2 flex  gap-1 flex-col justify-center windows-white-bg right-0 top-[5%] mr-4 mt-4 rounded-2xl">
+              <motion.div key="notification" initial={{x: 3000}} animate={{x:0}} exit={{x: 3000}} transition={{ duration: 2.5}} drag dragConstraints={{ top: 10, bottom: 10, left: 10, right: 10 }} className="absolute z-100 p-2 flex  gap-1 flex-col justify-center windows-white-bg right-0 top-[5%] mr-4 mt-4 rounded-2xl">
               <p className="text-center">Tip💡 <br /> Swipe up or sideways to close apps <br />  Tap outside to exit </p>
               <span onClick={() => setNotification(false)} className="bg-yellow-300 active:bg-yellow-500 p-1 text-center rounded-2xl opacity-100 cursor-pointer">Got it!</span>
               </motion.div>
