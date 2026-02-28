@@ -21,6 +21,9 @@ export default defineConfig({
 ],
 
   vite: {
+    build: {
+      minify: false
+    },
     plugins: [tailwindcss(), ViteImageOptimizer({
         
         includePublic: true,
