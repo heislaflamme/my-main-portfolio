@@ -20,7 +20,7 @@ export default function Mobile() {
 
   const [now, setNow] = useState(new Date());
 
-  const [isReady, setIsReady] = useState(false);
+  const headerRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -64,9 +64,11 @@ export default function Mobile() {
       handlers.push({ char, enter, leave });
     });
 
+    // Reveal header via GSAP (no React re-render needed)
+    gsap.set(headerRef.current, { opacity: 1 });
+
     gsap.from(chars, {
-      onStart: () => setIsReady(true),
-      opacity: 0.01,
+      opacity: 0,
       x: 200,
       rotateZ: -60,
       stagger: 0.05,
@@ -97,7 +99,7 @@ export default function Mobile() {
   return (
     <>
       <div className="fixed inset-0 overflow-hidden">
-        <img src="/images/mobile-bg.webp" alt="background" loading="eager" className="mobile-bg" />
+        <img src="/images/mobile-bg.webp" alt="background" loading="eager" fetchPriority="high" className="mobile-bg" />
         
         <AnimatePresence>
           {(isApp1Open || isApp2Open || isApp3Open || isApp4Open) && (
@@ -276,7 +278,9 @@ export default function Mobile() {
 
         <div className="hero-header h-[55%] p-2 flex flex-col absolute w-full gap-5 justify-center">
           <header
-            className={`mobile-hero-text text-center text-[11vw] text-white pointer-events-auto ${isReady ? "opacity-100" : "opacity-0"}`}
+            ref={headerRef}
+            className="mobile-hero-text text-center text-[11vw] text-white pointer-events-auto"
+            style={{ opacity: 0.01 }}
           >
             HEY I'M CHIDUBEM
           </header>

@@ -2,14 +2,14 @@ import { motion } from "framer-motion"
 import gsap from "gsap"
 import { SplitText } from "gsap/SplitText"
 import { useGSAP } from "@gsap/react"
-import { useState } from "react"
+import { useRef } from "react"
 
 
 gsap.registerPlugin(SplitText)
 
 export default function Desktop() {
 
-	const [isReady, setIsReady] = useState(false);
+	const headerRef = useRef<HTMLElement>(null);
 
 	useGSAP(() => {
     const split = new SplitText(".hero-text", { type: "words,chars" });
@@ -45,8 +45,10 @@ export default function Desktop() {
       handlers.push({ char, enter, leave });
     });
 
+    // Reveal header via GSAP (no React re-render needed)
+    gsap.set(headerRef.current, { opacity: 1 });
+
     gsap.from(chars, {
-      onStart: () => setIsReady(true),
       opacity: 0,
       x: 200,
       rotateZ: -60,
@@ -105,7 +107,7 @@ export default function Desktop() {
 
 			</div>
 			<div className="hero-header flex flex-col absolute w-full pointer-events-none h-full justify-center items-center">
-				<header className={`hero-text text-[8vw] text-white pointer-events-auto ${isReady ? "opacity-100" : "opacity-0"}`}>
+				<header ref={headerRef} className="hero-text text-[8vw] text-white pointer-events-auto" style={{ opacity: 0.01 }}>
 					HEY I'M CHIDUBEM
 				</header>
 				<motion.p initial={{ opacity: 0.01 }} animate={{ opacity: 1 }} transition={{ delay: 0.5, duration: 1 }} className="hero-p pointer-events-auto hover:scale-[1.05] transition-all duration-200 text-[2vw] text-white">A full-stack web developer ⚡</motion.p>

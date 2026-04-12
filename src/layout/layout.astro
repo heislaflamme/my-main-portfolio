@@ -54,6 +54,12 @@ import  SpeedInsights  from "@vercel/speed-insights/astro"
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
     <link rel="manifest" href="/site.webmanifest">
     
+    <!-- Preload LCP-critical assets -->
+    <link rel="preload" href="/fonts/Astromeda.ttf" as="font" type="font/ttf" crossorigin>
+    <link rel="preload" href="/fonts/LonelyStudy.otf" as="font" type="font/opentype" crossorigin>
+    <link rel="preload" href="/images/mobile-bg.webp" as="image" type="image/webp" media="(max-width: 1024px)">
+    <link rel="preload" href="/images/windows.jpg" as="image" type="image/jpeg" media="(min-width: 1025px)">
+    
 </head>
 <body class="h-full overflow-hidden">
 
