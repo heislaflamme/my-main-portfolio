@@ -276,7 +276,7 @@ export default function Mobile() {
 
         <div className="hero-header h-[55%] p-2 flex flex-col absolute w-full gap-5 justify-center">
           <header
-            className={`mobile-hero-text text-center text-[11vw] text-white pointer-events-auto ${isReady ? "opacity-100" : "opacity-1"}`}
+            className={`mobile-hero-text text-center text-[11vw] text-white pointer-events-auto ${isReady ? "opacity-100" : "opacity-0"}`}
           >
             HEY I'M CHIDUBEM
           </header>

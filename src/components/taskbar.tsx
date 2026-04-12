@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, useCallback, useMemo } from "react";
 import App from "./app.tsx";
 import { motion, AnimatePresence } from "framer-motion";
 import { Rnd } from "react-rnd";
@@ -7,749 +7,492 @@ import Projects from "./apps/projects.tsx";
 import About from "./apps/about.tsx";
 import Services from "./apps/services.tsx";
 
-export default function Taskbar({children}: {children: React.ReactNode}) {
+// ── App & link configuration ──────────────────────────────────────────
+interface AppConfig {
+  id: string;
+  title: string;
+  icon: string;
+  iconWidth: number;
+  iconHeight: number;
+  component: React.ReactNode;
+  defaultWidth: number;
+  defaultHeight: number;
+}
 
-    const [now, setNow] = useState(new Date())
+const APP_CONFIGS: AppConfig[] = [
+  {
+    id: "skills",
+    title: "Skills",
+    icon: "/images/file_explorer.png",
+    iconWidth: 30,
+    iconHeight: 30,
+    component: <Skills />,
+    defaultWidth: 800,
+    defaultHeight: 400,
+  },
+  {
+    id: "projects",
+    title: "Projects",
+    icon: "/images/acknowledgment.png",
+    iconWidth: 30,
+    iconHeight: 30,
+    component: <Projects />,
+    defaultWidth: 800,
+    defaultHeight: 400,
+  },
+  {
+    id: "about",
+    title: "About me",
+    icon: "/images/msword.png",
+    iconWidth: 40,
+    iconHeight: 40,
+    component: <About />,
+    defaultWidth: 800,
+    defaultHeight: 400,
+  },
+  {
+    id: "services",
+    title: "Services",
+    icon: "/images/comments.png",
+    iconWidth: 20,
+    iconHeight: 20,
+    component: <Services />,
+    defaultWidth: 800,
+    defaultHeight: 400,
+  },
+];
 
-    useEffect(() => {
-    const interval = setInterval(() => {
-      setNow(new Date())
-    }, 60000)
+interface QuickLink {
+  label: string;
+  icon: string;
+  href: string;
+}
 
-    return () => clearInterval(interval)
-     }, [])
+const QUICK_LINKS: QuickLink[] = [
+  { label: "Email", icon: "📧", href: "mailto:emekaogbuchidubem@gmail.com" },
+  { label: "LinkedIn", icon: "🔗", href: "https://www.linkedin.com/in/emekaogbuchidubem/" },
+  { label: "Telegram", icon: "📱", href: "https://t.me/heislaflame" },
+  { label: "Twitter", icon: "🐦", href: "https://x.com/heislaflame" },
+  { label: "Resume", icon: "📄", href: "/docs/resume.docx" },
+];
 
-    const ref = useRef(null);
-    const [isApp2Open, setIsApp2Open] = useState(false);
-    const [isApp3Open, setIsApp3Open] = useState(false);
-    const [isApp4Open, setIsApp4Open] = useState(false);
-    const [isApp5Open, setIsApp5Open] = useState(false);
-    const [isSearchOpen, setIsSearchOpen] = useState(false);
+// ── Window state ──────────────────────────────────────────────────────
+interface WindowState {
+  isOpen: boolean;
+  isMaximized: boolean;
+  isMinimized: boolean;  // true = taskbar indicator shown (app was opened at some point)
+  isFocused: boolean;
+  zIndex: number;
+}
 
-    const [isApp2Maximized, setIsApp2Maximized] = useState(false);
-    const [isApp3Maximized, setIsApp3Maximized] = useState(false);
-    const [isApp4Maximized, setIsApp4Maximized] = useState(false);
-    const [isApp5Maximized, setIsApp5Maximized] = useState(false);
+function createDefaultWindowState(): WindowState {
+  return { isOpen: false, isMaximized: false, isMinimized: false, isFocused: false, zIndex: 1 };
+}
 
-    const [isApp2Minimized, setIsApp2Minimized] = useState(false);
-    const [isApp3Minimized, setIsApp3Minimized] = useState(false);    
-    const [isApp4Minimized, setIsApp4Minimized] = useState(false);    
-    const [isApp5Minimized, setIsApp5Minimized] = useState(false);    
+function createInitialStates(): Record<string, WindowState> {
+  const states: Record<string, WindowState> = { search: createDefaultWindowState() };
+  for (const app of APP_CONFIGS) {
+    states[app.id] = createDefaultWindowState();
+  }
+  return states;
+}
 
-    const [isApp2Focused, setIsApp2Focused] = useState(false);
-    const [isApp3Focused, setIsApp3Focused] = useState(false);
-    const [isApp4Focused, setIsApp4Focused] = useState(false);
-    const [isApp5Focused, setIsApp5Focused] = useState(false);
+// ── Component ─────────────────────────────────────────────────────────
+export default function Taskbar({ children }: { children: React.ReactNode }) {
+  const [now, setNow] = useState(new Date());
+  const [windows, setWindows] = useState<Record<string, WindowState>>(createInitialStates);
+  const [searchQuery, setSearchQuery] = useState("");
+  const zCounter = useRef(10);
+  const searchInputRef = useRef<HTMLInputElement>(null);
 
-    function FocusApp2() {
-        setIsApp2Focused(true);
-        setIsApp3Focused(false);
-        setIsApp4Focused(false);
-        setIsApp5Focused(false);
+  // Clock — sync to the start of the next minute so the first tick is accurate
+  useEffect(() => {
+    const msUntilNextMinute = (60 - now.getSeconds()) * 1000 - now.getMilliseconds();
+    const timeout = setTimeout(() => {
+      setNow(new Date());
+      const interval = setInterval(() => setNow(new Date()), 60000);
+      return () => clearInterval(interval);
+    }, msUntilNextMinute);
+    return () => clearTimeout(timeout);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  // Auto-focus search input when panel opens
+  useEffect(() => {
+    if (windows.search.isOpen && searchInputRef.current) {
+      searchInputRef.current.focus();
     }
+  }, [windows.search.isOpen]);
 
-    function FocusApp3() {
-        setIsApp3Focused(true);
-        setIsApp2Focused(false);
-        setIsApp4Focused(false);
-        setIsApp5Focused(false);
-    }
+  // ── Helpers ──────────────────────────────────────────────────────────
+  const nextZ = useCallback(() => {
+    zCounter.current += 1;
+    return zCounter.current;
+  }, []);
 
-    function FocusApp4() {
-        setIsApp4Focused(true);
-        setIsApp2Focused(false);
-        setIsApp3Focused(false);
-        setIsApp5Focused(false);
-    }
+  const updateWindow = useCallback((id: string, patch: Partial<WindowState>) => {
+    setWindows((prev) => ({ ...prev, [id]: { ...prev[id], ...patch } }));
+  }, []);
 
-    function FocusApp5() {
-        setIsApp5Focused(true);
-        setIsApp3Focused(false);
-        setIsApp4Focused(false);
-        setIsApp2Focused(false);
-    }
+  const unfocusAll = useCallback(() => {
+    setWindows((prev) => {
+      const next = { ...prev };
+      for (const key of Object.keys(next)) {
+        next[key] = { ...next[key], isFocused: false };
+      }
+      return next;
+    });
+  }, []);
 
-    function CloseAll() {
-        setIsApp5Focused(false);
-        setIsApp3Focused(false);
-        setIsApp4Focused(false);
-        setIsApp2Focused(false);
-    }
+  const focusWindow = useCallback((id: string) => {
+    setWindows((prev) => {
+      const next = { ...prev };
+      for (const key of Object.keys(next)) {
+        next[key] = { ...next[key], isFocused: key === id };
+      }
+      return next;
+    });
+  }, []);
 
-    
-    const [app2ZIndex, setApp2ZIndex] = useState(1);
-    const [app3ZIndex, setApp3ZIndex] = useState(1);
-    const [app4ZIndex, setApp4ZIndex] = useState(1);
-    const [app5ZIndex, setApp5ZIndex] = useState(1);
-    const [searchZIndex, setSearchZIndex] = useState(1);
+  // ── Taskbar icon click handler ──────────────────────────────────────
+  const handleTaskbarClick = useCallback(
+    (id: string) => {
+      const win = windows[id];
+      if (win.isOpen) {
+        // Window is visible — minimize it
+        updateWindow(id, { isOpen: false, isFocused: false });
+        unfocusAll();
+      } else if (win.isMinimized) {
+        // Window was minimized — restore it
+        updateWindow(id, { isOpen: true, isFocused: true, zIndex: nextZ() });
+        focusWindow(id);
+      } else {
+        // Window never opened or was closed — open fresh
+        updateWindow(id, { isOpen: true, isMinimized: true, isFocused: true, zIndex: nextZ() });
+        focusWindow(id);
+      }
+      updateWindow("search", { isOpen: false });
+    },
+    [windows, updateWindow, unfocusAll, focusWindow, nextZ],
+  );
 
-    const getMaxZIndex = () => Math.max(app2ZIndex, app3ZIndex, app4ZIndex, app5ZIndex, searchZIndex);
+  // ── Desktop background click — only unfocus, don't close ───────────
+  const handleDesktopClick = useCallback(
+    (e: React.MouseEvent) => {
+      e.stopPropagation();
+      unfocusAll();
+      updateWindow("search", { isOpen: false });
+    },
+    [unfocusAll, updateWindow],
+  );
 
+  // ── Search filtering ───────────────────────────────────────────────
+  const query = searchQuery.toLowerCase().trim();
+
+  const filteredApps = useMemo(
+    () => (query ? APP_CONFIGS.filter((a) => a.title.toLowerCase().includes(query)) : APP_CONFIGS),
+    [query],
+  );
+
+  const filteredLinks = useMemo(
+    () => (query ? QUICK_LINKS.filter((l) => l.label.toLowerCase().includes(query)) : QUICK_LINKS),
+    [query],
+  );
+
+  // Open an app from the search panel
+  const openAppFromSearch = useCallback(
+    (id: string) => {
+      updateWindow(id, { isOpen: true, isMinimized: true, isFocused: true, zIndex: nextZ() });
+      focusWindow(id);
+      updateWindow("search", { isOpen: false });
+      setSearchQuery("");
+    },
+    [updateWindow, focusWindow, nextZ],
+  );
+
+  // ── Render ──────────────────────────────────────────────────────────
   return (
     <>
-      <div
-        ref={ref}
-        className="desktop-bg fixed inset-0"
-        onMouseDown={(e) => {
-          e.stopPropagation();
-          CloseAll();
-          setIsSearchOpen(false);
-          setIsApp2Open(false);
-          setIsApp3Open(false);
-          setIsApp4Open(false);
-          setIsApp5Open(false);
-          setIsApp2Minimized(
-            isApp2Open ? true : isApp2Minimized ? true : false,
-          );
-          setIsApp3Minimized(
-            isApp3Open ? true : isApp3Minimized ? true : false,
-          );
-          setIsApp4Minimized(
-            isApp4Open ? true : isApp4Minimized ? true : false,
-          );
-          setIsApp5Minimized(
-            isApp5Open ? true : isApp5Minimized ? true : false,
-          );
-        }}
-      >
+      {/* Desktop background */}
+      <div className="desktop-bg fixed inset-0" onMouseDown={handleDesktopClick}>
         {children}
       </div>
+
       <AnimatePresence>
-        {isSearchOpen && (
+        {/* ── Search Panel ─────────────────────────────────────────── */}
+        {windows.search.isOpen && (
           <motion.div
             key="search"
-            initial={{ scale: 0, y: 500 }}
-            animate={{ scale: 1, y: 0 }}
-            exit={{ scale: 0, y: 500 }}
-            transition={{ duration: 0.35 }}
-            style={{ zIndex: searchZIndex }}
+            initial={{ scale: 0.92, y: 40, opacity: 0 }}
+            animate={{ scale: 1, y: 0, opacity: 1 }}
+            exit={{ scale: 0.92, y: 40, opacity: 0 }}
+            transition={{ duration: 0.25, ease: "easeOut" }}
+            style={{ zIndex: windows.search.zIndex }}
             onMouseDown={(e) => {
               e.stopPropagation();
-              setSearchZIndex(getMaxZIndex() + 1);
+              updateWindow("search", { zIndex: nextZ() });
             }}
-            className="w-[40%] fixed bottom-14 left-1/2 rounded shadow-2xl -translate-x-1/2 h-[85%] windows-white-bg"
+            className="w-[40%] fixed bottom-14 left-1/2 -translate-x-1/2 rounded-lg shadow-2xl overflow-hidden windows-white-bg flex flex-col"
+            id="search-panel"
           >
-            <p className="text-center w-full h-full relative top-1/2">Under Construction lmao...⚙️👷</p>
+            {/* Search input */}
+            <div className="relative p-3 pb-2">
+              <img
+                src="/images/search.svg"
+                alt=""
+                width={16}
+                height={16}
+                className="absolute left-6 top-1/2 -translate-y-1/2 opacity-50"
+              />
+              <input
+                ref={searchInputRef}
+                type="text"
+                className="search-input"
+                placeholder="Type here to search"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                onMouseDown={(e) => e.stopPropagation()}
+              />
+            </div>
+
+            {/* Scrollable content */}
+            <div className="flex-1 overflow-y-auto pb-3" style={{ maxHeight: "calc(85vh - 80px)" }}>
+              {/* Apps section */}
+              {filteredApps.length > 0 && (
+                <>
+                  <p className="search-section-title">{query ? "Apps" : "Recent"}</p>
+                  <div className="flex flex-wrap gap-1 px-3">
+                    {filteredApps.map((app) => (
+                      <div
+                        key={app.id}
+                        className="search-tile"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          openAppFromSearch(app.id);
+                        }}
+                      >
+                        <img
+                          loading="lazy"
+                          src={app.icon}
+                          alt={app.title}
+                          width={32}
+                          height={32}
+                        />
+                        <p>{app.title}</p>
+                      </div>
+                    ))}
+                  </div>
+                </>
+              )}
+
+              {/* Divider */}
+              {filteredApps.length > 0 && filteredLinks.length > 0 && (
+                <div className="search-divider" />
+              )}
+
+              {/* Quick links section */}
+              {filteredLinks.length > 0 && (
+                <>
+                  <p className="search-section-title">Quick Links</p>
+                  <div className="flex flex-col px-2">
+                    {filteredLinks.map((link) => (
+                      <a
+                        key={link.label}
+                        href={link.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="search-link"
+                        onClick={() => {
+                          updateWindow("search", { isOpen: false });
+                          setSearchQuery("");
+                        }}
+                      >
+                        <span className="text-lg">{link.icon}</span>
+                        <span>{link.label}</span>
+                      </a>
+                    ))}
+                  </div>
+                </>
+              )}
+
+              {/* No results */}
+              {filteredApps.length === 0 && filteredLinks.length === 0 && (
+                <div className="px-4 py-8 text-center">
+                  <p className="text-sm" style={{ color: "#888" }}>
+                    No results found for "{searchQuery}"
+                  </p>
+                </div>
+              )}
+            </div>
           </motion.div>
         )}
 
-        {isApp2Open && (
-          <Rnd
-            key="app2"
-            bounds="window"
-            disableDragging={isApp2Maximized}
-            minHeight="300px"
-            minWidth="300px"
-            default={{
-              x: (window.innerWidth - 800) / 2,
-              y: (window.innerHeight - 400) / 2,
-              width: 800,
-              height: 400,
-            }}
-            dragHandleClassName="titlebar2"
-            position={
-              isApp2Maximized
-                ? {
-                    x: 0,
-                    y: 0,
-                  }
-                : undefined
-            }
-            size={
-              isApp2Maximized
-                ? {
-                    width: window.innerWidth,
-                    height: window.innerHeight - 52,
-                  }
-                : undefined
-            }
-            style={{ zIndex: app2ZIndex }}
-            onMouseDown={(e) => {
-              e.stopPropagation();
-              setApp2ZIndex(getMaxZIndex() + 1);
-              FocusApp2();
-              setIsSearchOpen(false);
-            }}
-          >
-            <motion.div
-              layout
-              initial={{ scale: 0, y: 500 }}
-              animate={{ scale: 1, y: 0 }}
-              exit={{ scale: 0, y: 500 }}
-              transition={{ duration: 0.35 }}
-              className=" windows-white-bg shadow-2xl overflow-hidden flex flex-col rounded w-full h-full"
+        {/* ── App Windows ──────────────────────────────────────────── */}
+        {APP_CONFIGS.map((app) => {
+          const win = windows[app.id];
+          if (!win.isOpen) return null;
+          return (
+            <Rnd
+              key={app.id}
+              bounds="window"
+              disableDragging={win.isMaximized}
+              minHeight="300px"
+              minWidth="300px"
+              default={{
+                x: typeof window !== "undefined" ? (window.innerWidth - app.defaultWidth) / 2 : 100,
+                y: typeof window !== "undefined" ? (window.innerHeight - app.defaultHeight) / 2 : 100,
+                width: app.defaultWidth,
+                height: app.defaultHeight,
+              }}
+              dragHandleClassName="titlebar-drag"
+              position={win.isMaximized ? { x: 0, y: 0 } : undefined}
+              size={
+                win.isMaximized
+                  ? {
+                      width: typeof window !== "undefined" ? window.innerWidth : "100%",
+                      height: typeof window !== "undefined" ? window.innerHeight - 52 : "100%",
+                    }
+                  : undefined
+              }
+              style={{ zIndex: win.zIndex }}
+              onMouseDown={(e) => {
+                e.stopPropagation();
+                updateWindow(app.id, { zIndex: nextZ() });
+                focusWindow(app.id);
+                updateWindow("search", { isOpen: false });
+              }}
             >
-              <div className="relative flex gap-4 w-full border-b border-b-black/20 rounded-t flex-row-reverse p-2 titlebar2 cursor-grab active:cursor-grabbing">
-                <div className="absolute w-full flex gap-2 pl-3">
-                  <img loading="lazy" src="/images/file_explorer.png" alt="skills" width={25} height={25} />
-                  <p>Skills</p>
-                </div>
-                <button
-                  className=" hover:bg-red-500 rounded px-2 active:scale-[0.8] cursor-pointer transition-all duration-100"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    setIsApp2Open(false);
-                    setIsApp2Maximized(false);
-                    setIsApp2Minimized(false);
-                    CloseAll();
-                  }}
-                >
-                  <img loading="lazy"
-                    src="/images/exit.svg"
-                    alt="exit button"
-                    width={16}
-                    height={10}
-                    className="invert-0"
-                  />
-                </button>
-                <button
-                  className="hover:bg-white/10 rounded px-2 active:scale-[0.8] cursor-pointer transition-all duration-100"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    setIsApp2Maximized(!isApp2Maximized);
-                  }}
-                >
-                  <img loading="lazy"
-                    src="/images/maximize.svg"
-                    alt="maximize button"
-                    width={13}
-                    height={10}
-                    className="invert-0"
-                  />
-                </button>
-                <button
-                  className="hover:bg-white/10 rounded px-2 active:scale-[0.8] cursor-pointer transition-all duration-100"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    setIsApp2Minimized(isApp2Open ? true : false);
-                    setIsApp2Open(false);
-                    CloseAll();
-                  }}
-                >
-                  <img loading="lazy"
-                    src="/images/minimize.svg"
-                    alt="minimize button"
-                    width={20}
-                    height={10}
-                    className="invert-0"
-                  />
-                </button>
-              </div>
-              <div className="overflow-auto p-3">
-                <Skills/>
-              </div>
-            </motion.div>
-          </Rnd>
-        )}
+              <motion.div
+                layout
+                initial={{ scale: 0, y: 500 }}
+                animate={{ scale: 1, y: 0 }}
+                exit={{ scale: 0, y: 500 }}
+                transition={{ duration: 0.35 }}
+                className="windows-white-bg shadow-2xl overflow-hidden flex flex-col rounded w-full h-full"
+              >
+                {/* Title bar */}
+                <div className="relative flex gap-4 w-full border-b border-b-black/20 rounded-t flex-row-reverse p-2 titlebar-drag cursor-grab active:cursor-grabbing">
+                  <div className="absolute w-full flex gap-2 pl-3 items-center">
+                    <img
+                      loading="lazy"
+                      src={app.icon}
+                      alt={app.title}
+                      width={app.id === "about" ? 25 : 20}
+                      height={app.id === "about" ? 25 : 20}
+                    />
+                    <p>{app.title}</p>
+                  </div>
 
-        {isApp3Open && (
-          <Rnd
-            key="app3"
-            bounds="window"
-            disableDragging={isApp3Maximized}
-            minHeight="300px"
-            minWidth="300px"
-            default={{
-              x: (window.innerWidth - 900) / 2,
-              y: (window.innerHeight - 500) / 2,
-              width: 800,
-              height: 400,
-            }}
-            dragHandleClassName="titlebar2"
-            position={
-              isApp3Maximized
-                ? {
-                    x: 0,
-                    y: 0,
-                  }
-                : undefined
-            }
-            size={
-              isApp3Maximized
-                ? {
-                    width: window.innerWidth,
-                    height: window.innerHeight - 52,
-                  }
-                : undefined
-            }
-            style={{ zIndex: app3ZIndex }}
-            onMouseDown={(e) => {
-              e.stopPropagation();
-              setApp3ZIndex(getMaxZIndex() + 1);
-              FocusApp3();
-              setIsSearchOpen(false);
-            }}
-          >
-            <motion.div
-              layout
-              initial={{ scale: 0, y: 500 }}
-              animate={{ scale: 1, y: 0 }}
-              exit={{ scale: 0, y: 500 }}
-              transition={{ duration: 0.35 }}
-              className=" windows-white-bg shadow-2xl flex flex-col overflow-hidden rounded w-full h-full"
-            >
-              <div className="relative flex gap-4 w-full border-b border-b-black/20 rounded-t flex-row-reverse p-2 titlebar2 cursor-grab active:cursor-grabbing">
-                <div className="absolute w-full flex gap-2 pl-3">
-                  <img loading="lazy" src="/images/acknowledgment.png" alt="Projects" width={25} height={25} />
-                  <p>Projects</p>
-                </div>
-                <button
-                  className=" hover:bg-red-500 rounded px-2 active:scale-[0.8] cursor-pointer transition-all duration-100"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    setIsApp3Open(false);
-                    setIsApp3Maximized(false);
-                    setIsApp3Minimized(false);
-                    CloseAll();
-                  }}
-                >
-                  <img loading="lazy"
-                    src="/images/exit.svg"
-                    alt="exit button"
-                    width={16}
-                    height={10}
-                    className="invert-0"
-                  />
-                </button>
-                <button
-                  className="hover:bg-white/10 rounded px-2 active:scale-[0.8] cursor-pointer transition-all duration-100"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    setIsApp3Maximized(!isApp3Maximized);
-                  }}
-                >
-                  <img loading="lazy"
-                    src="/images/maximize.svg"
-                    alt="maximize button"
-                    width={13}
-                    height={10}
-                    className="invert-0"
-                  />
-                </button>
-                <button
-                  className="hover:bg-white/10 rounded px-2 active:scale-[0.8] cursor-pointer transition-all duration-100"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    setIsApp3Open(false);
-                    CloseAll();
-                  }}
-                >
-                  <img loading="lazy"
-                    src="/images/minimize.svg"
-                    alt="minimize button"
-                    width={20}
-                    height={10}
-                    className="invert-0"
-                  />
-                </button>
-              </div>
-              <div className="relative overflow-y-auto p-4 h-full">
-                <Projects/>
-              </div>
-            </motion.div>
-          </Rnd>
-        )}
+                  {/* Close */}
+                  <button
+                    className="hover:bg-red-500 rounded px-2 active:scale-[0.8] cursor-pointer transition-all duration-100"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      updateWindow(app.id, {
+                        isOpen: false,
+                        isMaximized: false,
+                        isMinimized: false,
+                        isFocused: false,
+                      });
+                    }}
+                  >
+                    <img loading="lazy" src="/images/exit.svg" alt="close" width={16} height={10} className="invert-0" />
+                  </button>
 
-        {isApp4Open && (
-          <Rnd
-            key="app4"
-            bounds="window"
-            disableDragging={isApp4Maximized}
-            minHeight="300px"
-            minWidth="300px"
-            default={{
-              x: (window.innerWidth - 700) / 2,
-              y: (window.innerHeight - 300) / 2,
-              width: 800,
-              height: 400,
-            }}
-            dragHandleClassName="titlebar2"
-            position={
-              isApp4Maximized
-                ? {
-                    x: 0,
-                    y: 0,
-                  }
-                : undefined
-            }
-            size={
-              isApp4Maximized
-                ? {
-                    width: window.innerWidth,
-                    height: window.innerHeight - 52,
-                  }
-                : undefined
-            }
-            style={{ zIndex: app4ZIndex }}
-            onMouseDown={(e) => {
-              e.stopPropagation();
-              setApp4ZIndex(getMaxZIndex() + 1);
-              FocusApp4();
-              setIsSearchOpen(false);
-            }}
-          >
-            <motion.div
-              layout
-              initial={{ scale: 0, y: 500 }}
-              animate={{ scale: 1, y: 0 }}
-              exit={{ scale: 0, y: 500 }}
-              transition={{ duration: 0.35 }}
-              className=" windows-white-bg flex flex-col overflow-hidden shadow-2xl rounded w-full h-full"
-            >
-              <div className="relative flex gap-4 w-full border-b border-b-black/20 rounded-t flex-row-reverse p-2 titlebar2 cursor-grab active:cursor-grabbing">
-                <div className="absolute w-full flex gap-2 pl-3">
-                  <img loading="lazy" src="/images/msword.png" alt="about me" width={40} height={40} />
-                  <p>About me</p>
-                </div>
-                <button
-                  className=" hover:bg-red-500 rounded px-2 active:scale-[0.8] cursor-pointer transition-all duration-100"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    setIsApp4Open(false);
-                    setIsApp4Maximized(false);
-                    setIsApp4Minimized(false);
-                    CloseAll();
-                  }}
-                >
-                  <img loading="lazy"
-                    src="/images/exit.svg"
-                    alt="exit button"
-                    width={16}
-                    height={10}
-                    className="invert-0"
-                  />
-                </button>
-                <button
-                  className="hover:bg-white/10 rounded px-2 active:scale-[0.8] cursor-pointer transition-all duration-100"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    setIsApp4Maximized(!isApp4Maximized);
-                  }}
-                >
-                  <img loading="lazy"
-                    src="/images/maximize.svg"
-                    alt="maximize button"
-                    width={13}
-                    height={10}
-                    className="invert-0"
-                  />
-                </button>
-                <button
-                  className="hover:bg-white/10 rounded px-2 active:scale-[0.8] cursor-pointer transition-all duration-100"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    setIsApp4Minimized(isApp4Open ? true : false);
-                    setIsApp4Open(false);
-                    CloseAll();
-                  }}
-                >
-                  <img loading="lazy"
-                    src="/images/minimize.svg"
-                    alt="minimize button"
-                    width={20}
-                    height={10}
-                    className="invert-0"
-                  />
-                </button>
-              </div>
-              <div className="flex-1 p-4 overflow-y-auto">
-                <About/>
-              </div>
-            </motion.div>
-          </Rnd>
-        )}
+                  {/* Maximize */}
+                  <button
+                    className="hover:bg-white/10 rounded px-2 active:scale-[0.8] cursor-pointer transition-all duration-100"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      updateWindow(app.id, { isMaximized: !win.isMaximized });
+                    }}
+                  >
+                    <img loading="lazy" src="/images/maximize.svg" alt="maximize" width={13} height={10} className="invert-0" />
+                  </button>
 
-        {isApp5Open && (
-          <Rnd
-            key="app5"
-            bounds="window"
-            disableDragging={isApp5Maximized}
-            minHeight="300px"
-            minWidth="300px"
-            default={{
-              x: (window.innerWidth - 750) / 2,
-              y: (window.innerHeight - 400) / 2,
-              width: 800,
-              height: 400,
-            }}
-            dragHandleClassName="titlebar2"
-            position={
-              isApp5Maximized
-                ? {
-                    x: 0,
-                    y: 0,
-                  }
-                : undefined
-            }
-            size={
-              isApp5Maximized
-                ? {
-                    width: window.innerWidth,
-                    height: window.innerHeight - 52,
-                  }
-                : undefined
-            }
-            style={{ zIndex: app5ZIndex }}
-            onMouseDown={(e) => {
-              e.stopPropagation();
-              setApp5ZIndex(getMaxZIndex() + 1);
-              FocusApp5();
-              setIsSearchOpen(false);
-            }}
-          >
-            <motion.div
-              layout
-              initial={{ scale: 0, y: 500 }}
-              animate={{ scale: 1, y: 0 }}
-              exit={{ scale: 0, y: 500 }}
-              transition={{ duration: 0.35 }}
-              className=" windows-white-bg flex flex-col shadow-2xl rounded w-full h-full"
-            >
-              <div className="relative flex gap-4 w-full border-b border-b-black/20 rounded-t flex-row-reverse p-2 titlebar2 cursor-grab active:cursor-grabbing">
-                <div className="absolute w-full flex gap-2 pl-3">
-                  <img loading="lazy" src="/images/comments.png" alt="services" width={20} height={20} />
-                  <p>Services</p>
+                  {/* Minimize */}
+                  <button
+                    className="hover:bg-white/10 rounded px-2 active:scale-[0.8] cursor-pointer transition-all duration-100"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      updateWindow(app.id, { isOpen: false, isFocused: false });
+                      unfocusAll();
+                    }}
+                  >
+                    <img loading="lazy" src="/images/minimize.svg" alt="minimize" width={20} height={10} className="invert-0" />
+                  </button>
                 </div>
-                <button
-                  className=" hover:bg-red-500 rounded px-2 active:scale-[0.8] cursor-pointer transition-all duration-100"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    setIsApp5Open(false);
-                    setIsApp5Maximized(false);
-                    setIsApp5Minimized(false);
-                    CloseAll();
-                  }}
-                >
-                  <img loading="lazy"
-                    src="/images/exit.svg"
-                    alt="exit button"
-                    width={16}
-                    height={10}
-                    className="invert-0"
-                  />
-                </button>
-                <button
-                  className="hover:bg-white/10 rounded px-2 active:scale-[0.8] cursor-pointer transition-all duration-100"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    setIsApp5Maximized(!isApp5Maximized);
-                  }}
-                >
-                  <img loading="lazy"
-                    src="/images/maximize.svg"
-                    alt="maximize button"
-                    width={13}
-                    height={10}
-                    className="invert-0"
-                  />
-                </button>
-                <button
-                  className="hover:bg-white/10 rounded px-2 active:scale-[0.8] cursor-pointer transition-all duration-100"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    setIsApp5Minimized(isApp5Open ? true : false);
-                    setIsApp5Open(false);
-                    CloseAll();
-                  }}
-                >
-                  <img loading="lazy"
-                    src="/images/minimize.svg"
-                    alt="minimize button"
-                    width={20}
-                    height={10}
-                    className="invert-0"
-                  />
-                </button>
-              </div>
-              <div className="flex-1 p-4 overflow-y-auto">
-                  <Services/>
-              </div>
-            </motion.div>
-          </Rnd>
-        )}
+
+                {/* Content */}
+                <div className="flex-1 overflow-auto p-3">{app.component}</div>
+              </motion.div>
+            </Rnd>
+          );
+        })}
       </AnimatePresence>
 
+      {/* ── Taskbar ──────────────────────────────────────────────────── */}
       <div className="windows-white-bg fixed bottom-0 h-13 gap-5 items-center w-full flex justify-center z-50">
+        {/* Windows button */}
         <a href="/">
           <App className="h-10 w-10 cursor-pointer rounded flex justify-center items-center hover-white">
-            <img loading="eager"
-              src="/images/Windows.png"
-              alt="Windows Icon"
-              width={30}
-              height={30}
-            />
+            <img loading="eager" src="/images/Windows.png" alt="Windows Icon" width={30} height={30} />
           </App>
         </a>
 
+        {/* Search button */}
         <App
           className="flex justify-center items-center rounded-2xl cursor-pointer h-7.5 w-25"
           style={{
-            backgroundColor: isSearchOpen
-              ? "rgba(54, 129, 214)"
-              : "rgba(0,0,0,0.3)",
+            backgroundColor: windows.search.isOpen ? "rgba(54, 129, 214)" : "rgba(0,0,0,0.3)",
           }}
           onClick={(e) => {
             e.stopPropagation();
-            setIsSearchOpen(!isSearchOpen);
-            if (!isSearchOpen) setSearchZIndex(getMaxZIndex() + 1); 
+            const isOpen = !windows.search.isOpen;
+            updateWindow("search", { isOpen, zIndex: isOpen ? nextZ() : windows.search.zIndex });
+            if (!isOpen) setSearchQuery("");
           }}
         >
-          <img loading="eager"
-            src="/images/search.svg"
-            alt="Search Icon"
-            width={20}
-            height={20}
-          />
+          <img loading="eager" src="/images/search.svg" alt="Search Icon" width={20} height={20} />
           <p className="text-white text-[13px] px-2">Search</p>
         </App>
 
-        <App
-          className="relative h-10 w-10 cursor-pointer rounded flex justify-center items-center hover-white"
-          style={{
-            backgroundColor: isApp2Focused ? "rgba(255, 255, 255, 0.644)" : " ",
-          }}
-          onClick={(e) => {
-            e.stopPropagation();
-            setIsApp2Open(!isApp2Open);
-            if (isApp2Open) {
-              setIsApp2Focused(false);
-            }
-            setIsApp2Minimized(true);
-            setIsSearchOpen(false);
-            if (!isApp2Open) {
-              setApp2ZIndex(getMaxZIndex() + 1);
-              FocusApp2();
-            } 
-          }}
-        >
-          <img loading="eager"
-            src="/images/file_explorer.png"
-            alt="about me"
-            width={30}
-            height={30}
-          />
-          {isApp2Minimized && (
-            <div className="absolute w-3 left-1/2 -translate-x-1/2 h-1 rounded-2xl mb-px windows-blue-bg bottom-0"></div>
-          )}
-        </App>
+        {/* App icons */}
+        {APP_CONFIGS.map((app) => {
+          const win = windows[app.id];
+          return (
+            <App
+              key={app.id}
+              className="relative h-10 w-10 cursor-pointer rounded flex justify-center items-center hover-white"
+              style={{
+                backgroundColor: win.isFocused ? "rgba(255, 255, 255, 0.644)" : "",
+              }}
+              onClick={(e) => {
+                e.stopPropagation();
+                handleTaskbarClick(app.id);
+              }}
+            >
+              <img
+                loading="eager"
+                src={app.icon}
+                alt={app.title}
+                width={app.id === "about" ? 60 : 30}
+                height={app.id === "about" ? 60 : 30}
+                className={app.id === "services" ? "pb-1" : app.id === "projects" ? "pb-px" : ""}
+              />
+              {win.isMinimized && (
+                <div className="absolute w-3 left-1/2 -translate-x-1/2 h-1 rounded-2xl mb-px windows-blue-bg bottom-0" />
+              )}
+            </App>
+          );
+        })}
 
-        <App
-          className="relative h-10 w-10 cursor-pointer rounded flex justify-center items-center hover-white"
-          style={{
-            backgroundColor: isApp3Focused ? "rgba(255, 255, 255, 0.644)" : " ",
-          }}
-          onClick={(e) => {
-            e.stopPropagation();
-            setIsApp3Open(!isApp3Open);
-            if (isApp3Open) {
-              setIsApp3Focused(false);
-            }
-            setIsApp3Minimized(true);
-            setIsSearchOpen(false);
-            if (!isApp3Open) {
-              setApp3ZIndex(getMaxZIndex() + 1);
-              FocusApp3();
-            } 
-          }}
-        >
-          <img loading="eager"
-            src="/images/acknowledgment.png"
-            alt="projects"
-            width={30}
-            height={30}
-            className="pb-px"
-          />
-          {isApp3Minimized && (
-            <div className="absolute w-3 left-1/2 -translate-x-1/2 h-1 rounded-2xl mb-px windows-blue-bg bottom-0"></div>
-          )}
-        </App>
-
-        <App
-          className="relative h-10 w-10 cursor-pointer rounded flex justify-center items-center hover-white"
-          style={{
-            backgroundColor: isApp4Focused ? "rgba(255, 255, 255, 0.644)" : " ",
-          }}
-          onClick={(e) => {
-            e.stopPropagation();
-            setIsApp4Open(!isApp4Open);
-            if (isApp4Open) {
-              setIsApp4Focused(false);
-            }
-            setIsApp4Minimized(true);
-            setIsSearchOpen(false);
-            if (!isApp4Open) {
-              setApp4ZIndex(getMaxZIndex() + 1);
-              FocusApp4();
-            } 
-          }}
-        >
-          <img loading="eager"
-            src="/images/msword.png"
-            alt="about me"
-            width={60}
-            height={60}
-          />
-
-          {isApp4Minimized && (
-            <div className="absolute w-3 left-1/2 -translate-x-1/2 h-1 rounded-2xl mb-px windows-blue-bg bottom-0"></div>
-          )}
-        </App>
-
-        <App
-          className="relative h-10 w-10 cursor-pointer rounded flex justify-center items-center hover-white"
-          style={{
-            backgroundColor: isApp5Focused ? "rgba(255, 255, 255, 0.644)" : " ",
-          }}
-          onClick={(e) => {
-            e.stopPropagation();
-            setIsApp5Open(!isApp5Open);
-            if (isApp5Open) {
-              setIsApp5Focused(false);
-            }
-            setIsApp5Minimized(true);
-            setIsSearchOpen(false);
-            if (!isApp5Open) {
-              setApp5ZIndex(getMaxZIndex() + 1);
-              FocusApp5();
-            } 
-          }}
-        >
-          <img loading="eager"
-            src="/images/comments.png"
-            alt="my services"
-            width={30}
-            height={30}
-            className="pb-1"
-          />
-
-          {isApp5Minimized && (
-            <div className="absolute w-3 left-1/2 -translate-x-1/2 h-1 rounded-2xl mb-px windows-blue-bg bottom-0"></div>
-          )}
-        </App>
-
+        {/* System tray */}
         <div className="absolute right-0 flex gap-3">
           <div className="flex py-3 gap-2">
-            <img loading="eager"
-            src="/images/wifi.svg"
-            alt="wifi"
-            width={20}
-            height={20}
-            className="invert"
-          />
-          <img loading="eager"
-            src="/images/speaker.svg"
-            alt="speaker"
-            width={20}
-            height={20}
-            className="invert"
-          />
-          <img loading="eager"
-            src="/images/battery.svg"
-            alt="battery"
-            width={20}
-            height={20}
-            className="invert"
-          />
+            <img loading="eager" src="/images/wifi.svg" alt="wifi" width={20} height={20} className="invert" />
+            <img loading="eager" src="/images/speaker.svg" alt="speaker" width={20} height={20} className="invert" />
+            <img loading="eager" src="/images/battery.svg" alt="battery" width={20} height={20} className="invert" />
           </div>
 
           <div className="mr-3">
@@ -759,7 +502,6 @@ export default function Taskbar({children}: {children: React.ReactNode}) {
                 minute: "2-digit",
               })}
             </p>
-
             <p className="text-[13px]">
               {now.toLocaleDateString("en-NG", {
                 day: "2-digit",

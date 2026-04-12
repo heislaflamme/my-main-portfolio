@@ -81,3 +81,88 @@ h1,
 p {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
+
+/* Windows 10 Search Panel */
+.search-input {
+  background-color: rgba(255, 255, 255, 0.85);
+  border: 2px solid rgba(54, 129, 214, 0.6);
+  border-radius: 4px;
+  padding: 10px 12px 10px 36px;
+  font-size: 14px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  outline: none;
+  width: 100%;
+  transition: border-color 0.2s;
+}
+
+.search-input:focus {
+  border-color: rgba(54, 129, 214, 1);
+}
+
+.search-input::placeholder {
+  color: #888;
+  font-style: normal;
+}
+
+.search-section-title {
+  font-size: 13px;
+  font-weight: 600;
+  color: #444;
+  padding: 10px 16px 6px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.search-tile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 12px 8px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.15s;
+  min-width: 80px;
+}
+
+.search-tile:hover {
+  background-color: rgba(0, 0, 0, 0.08);
+}
+
+.search-tile:active {
+  background-color: rgba(0, 0, 0, 0.14);
+}
+
+.search-tile p {
+  font-size: 12px;
+  text-align: center;
+  color: #333;
+}
+
+.search-link {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.15s;
+  text-decoration: none;
+  color: #333;
+  font-size: 13px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.search-link:hover {
+  background-color: rgba(0, 0, 0, 0.08);
+}
+
+.search-link:active {
+  background-color: rgba(0, 0, 0, 0.14);
+}
+
+.search-divider {
+  height: 1px;
+  background-color: rgba(0, 0, 0, 0.12);
+  margin: 4px 12px;
+}
