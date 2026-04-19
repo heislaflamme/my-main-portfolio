@@ -99,8 +99,14 @@ export default function Mobile() {
   return (
     <>
       <div className="fixed inset-0 overflow-hidden">
-        <img src="/images/mobile-bg.webp" alt="background" loading="eager" fetchPriority="high" className="mobile-bg" />
-        
+        <img
+          src="/images/mobile-bg.webp"
+          alt="background"
+          loading="eager"
+          fetchPriority="high"
+          className="mobile-bg"
+        />
+
         <AnimatePresence>
           {(isApp1Open || isApp2Open || isApp3Open || isApp4Open) && (
             <motion.div
@@ -119,21 +125,43 @@ export default function Mobile() {
               key="modal"
             ></motion.div>
           )}
-          {
-            notification && (
-              <motion.div key="notification" initial={{x: 3000}} animate={{x:0}} exit={{x: 3000, scale: [1,1.2,1]}} transition={{ duration: 2.5}} drag dragConstraints={{ top: 10, bottom: 10, left: 10, right: 10 }} className="absolute z-100 p-2 flex  gap-1 flex-col justify-center windows-white-bg right-0 top-[5%] mr-4 mt-4 rounded-2xl">
-              <p className="text-center">Tip💡 <br /> drag up or sideways to close apps <br />  Tap outside apps to exit </p>
-              <motion.span animate={{scale: [1,1.05,1]}} transition={{ repeat: Infinity, duration: 1.5}} onClick={() => setNotification(false)} className="bg-yellow-300 active:bg-yellow-500 p-1 text-center rounded-2xl opacity-100 cursor-pointer">Got it!</motion.span>
-              </motion.div>
-            )
-          }
+          {notification && (
+            <motion.div
+              key="notification"
+              initial={{ x: 3000 }}
+              animate={{ x: 0 }}
+              exit={{ x: 3000, scale: [1, 1.2, 1] }}
+              transition={{ duration: 2.5 }}
+              drag
+              dragConstraints={{ top: 10, bottom: 10, left: 10, right: 10 }}
+              className="absolute z-100 p-2 flex  gap-1 flex-col justify-center windows-white-bg right-0 top-[5%] mr-4 mt-4 rounded-2xl"
+            >
+              <p className="text-center">
+                Tip💡 <br /> drag up or sideways to close apps <br /> Tap
+                outside apps to exit{" "}
+              </p>
+              <motion.span
+                animate={{ scale: [1, 1.05, 1] }}
+                transition={{ repeat: Infinity, duration: 1.5 }}
+                onClick={() => setNotification(false)}
+                className="bg-yellow-300 active:bg-yellow-500 p-1 text-center rounded-2xl opacity-100 cursor-pointer"
+              >
+                Got it!
+              </motion.span>
+            </motion.div>
+          )}
           {isApp1Open && (
             <motion.div
               drag
               key="app1"
               dragConstraints={{ top: 0, bottom: 0, left: 0, right: 0 }}
               onDragEnd={(event, info) => {
-                if (info.offset.y < -100 || info.offset.y > 100 || info.offset.x < -50 || info.offset.x > 50) {
+                if (
+                  info.offset.y < -100 ||
+                  info.offset.y > 100 ||
+                  info.offset.x < -50 ||
+                  info.offset.x > 50
+                ) {
                   setIsApp1Open(false);
                 }
               }}
@@ -144,11 +172,22 @@ export default function Mobile() {
             >
               <div className="absolute bottom-0 left-0 right-0 h-12 z-30  bg-transparent border-t-black/30 border-t rounded-b-xl" />
               <div>
-                <img loading="lazy" src="/images/files.png" alt="skills" width={30} height={30} className="absolute top-[-6%] rounded-full" />
+                <img
+                  loading="lazy"
+                  src="/images/files.png"
+                  alt="skills"
+                  width={30}
+                  height={30}
+                  className="absolute top-[-6%] rounded-full"
+                />
               </div>
               <div className="overflow-y-auto">
-                <h1 className={`text-center max-[360px]:text-[15px] min-[700px]:text-2xl`}>MY TECH STACK</h1>
-              <Skills/>
+                <h1
+                  className={`text-center max-[360px]:text-[15px] min-[700px]:text-2xl`}
+                >
+                  MY TECH STACK
+                </h1>
+                <Skills />
               </div>
             </motion.div>
           )}
@@ -159,7 +198,12 @@ export default function Mobile() {
               key="app2"
               dragConstraints={{ top: 0, bottom: 0, left: 0, right: 0 }}
               onDragEnd={(event, info) => {
-                if (info.offset.y < -100 || info.offset.y > 100 || info.offset.x < -50 || info.offset.x > 50) {
+                if (
+                  info.offset.y < -100 ||
+                  info.offset.y > 100 ||
+                  info.offset.x < -50 ||
+                  info.offset.x > 50
+                ) {
                   setIsApp2Open(false);
                 }
               }}
@@ -170,14 +214,22 @@ export default function Mobile() {
             >
               <div className="absolute bottom-0 left-0 right-0 h-12 z-30  bg-transparent border-t-black/30 border-t rounded-b-xl" />
               <div>
-                <img loading="lazy" src="/images/gallery.png" alt="projects" width={30} height={30} className="absolute top-[-6%] rounded-full" />
-              </div>
-              
-              <div className="overflow-y-auto">
-                <h1 className="text-center max-[360px]:text-[15px] min-[700px]:text-2xl">MY WORKS</h1>
-              <Projects/>
+                <img
+                  loading="lazy"
+                  src="/images/gallery.png"
+                  alt="projects"
+                  width={30}
+                  height={30}
+                  className="absolute top-[-6%] rounded-full"
+                />
               </div>
 
+              <div className="overflow-y-auto">
+                <h1 className="text-center max-[360px]:text-[15px] min-[700px]:text-2xl">
+                  MY WORKS
+                </h1>
+                <Projects />
+              </div>
             </motion.div>
           )}
 
@@ -187,7 +239,12 @@ export default function Mobile() {
               key="app3"
               dragConstraints={{ top: 0, bottom: 0, left: 0, right: 0 }}
               onDragEnd={(event, info) => {
-                if (info.offset.y < -100 || info.offset.y > 100 || info.offset.x < -50 || info.offset.x > 50) {
+                if (
+                  info.offset.y < -100 ||
+                  info.offset.y > 100 ||
+                  info.offset.x < -50 ||
+                  info.offset.x > 50
+                ) {
                   setIsApp3Open(false);
                 }
               }}
@@ -198,12 +255,21 @@ export default function Mobile() {
             >
               <div className="absolute bottom-0 left-0 right-0 h-12 z-30  bg-transparent border-t-black/30 border-t rounded-b-xl" />
               <div>
-                <img loading="lazy" src="/images/android_word.png" alt="about me" width={30} height={30} className="absolute top-[-6%] rounded-full" />
+                <img
+                  loading="lazy"
+                  src="/images/android_word.png"
+                  alt="about me"
+                  width={30}
+                  height={30}
+                  className="absolute top-[-6%] rounded-full"
+                />
               </div>
-              
+
               <div className="overflow-y-auto">
-                <h1 className="text-center max-[360px]:text-[15px] m-4 min-[700px]:text-2xl">ABOUT ME</h1>
-                <About/>
+                <h1 className="text-center max-[360px]:text-[15px] m-4 min-[700px]:text-2xl">
+                  ABOUT ME
+                </h1>
+                <About />
               </div>
             </motion.div>
           )}
@@ -214,7 +280,12 @@ export default function Mobile() {
               key="app4"
               dragConstraints={{ top: 0, bottom: 0, left: 0, right: 0 }}
               onDragEnd={(event, info) => {
-                if (info.offset.y < -100 || info.offset.y > 100 || info.offset.x < -50 || info.offset.x > 50) {
+                if (
+                  info.offset.y < -100 ||
+                  info.offset.y > 100 ||
+                  info.offset.x < -50 ||
+                  info.offset.x > 50
+                ) {
                   setIsApp4Open(false);
                 }
               }}
@@ -225,12 +296,21 @@ export default function Mobile() {
             >
               <div className="absolute bottom-0 left-0 right-0 h-12 z-30  bg-transparent border-t-black/30 border-t rounded-b-xl" />
               <div>
-                <img loading="lazy" src="/images/messages.png" alt="services" width={30} height={30} className="absolute top-[-6%] rounded-full" />
+                <img
+                  loading="lazy"
+                  src="/images/messages.png"
+                  alt="services"
+                  width={30}
+                  height={30}
+                  className="absolute top-[-6%] rounded-full"
+                />
               </div>
 
               <div className="overflow-y-auto">
-                <h1 className="text-center max-[360px]:text-[15px] m-4 min-[700px]:text-2xl">My Services</h1>
-                <Services/>
+                <h1 className="text-center max-[360px]:text-[15px] m-4 min-[700px]:text-2xl">
+                  My Services
+                </h1>
+                <Services />
               </div>
             </motion.div>
           )}
@@ -238,21 +318,24 @@ export default function Mobile() {
 
         <div className="relative w-full p-2">
           <div className="absolute flex gap-1 right-0 mr-5">
-            <img loading="eager"
+            <img
+              loading="eager"
               src="/images/wifi.svg"
               alt="wifi"
               width={15}
               height={15}
               className=""
             />
-            <img loading="eager"
+            <img
+              loading="eager"
               src="/images/cellular-data.svg"
               alt="cellular"
               width={15}
               height={15}
               className=""
             />
-            <img loading="eager"
+            <img
+              loading="eager"
               src="/images/battery.svg"
               alt="battery"
               width={15}
@@ -263,10 +346,10 @@ export default function Mobile() {
 
           <div className="absolute left-0 ml-5 ">
             <p className="text-white">
-              {now.toLocaleTimeString('en-US', {
-                hour: 'numeric',
-                minute: 'numeric',
-                hour12: true
+              {now.toLocaleTimeString("en-US", {
+                hour: "numeric",
+                minute: "numeric",
+                hour12: true,
               })}
             </p>
           </div>
@@ -311,7 +394,16 @@ export default function Mobile() {
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                <motion.img loading="eager" initial={{y: 500}} width={80} height={80} animate={{y: 0}} transition={{ duration: 1, delay: 0.2 }} src="/images/gmail.svg" alt="mail" />
+                <motion.img
+                  loading="eager"
+                  initial={{ y: 500 }}
+                  width={80}
+                  height={80}
+                  animate={{ y: 0 }}
+                  transition={{ duration: 1, delay: 0.2 }}
+                  src="/images/gmail.svg"
+                  alt="mail"
+                />
               </a>
             </App>
 
@@ -321,7 +413,16 @@ export default function Mobile() {
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                <motion.img loading="eager" initial={{y: 500}} width={80} height={80} animate={{y: 0}} transition={{ duration: 1, delay: 0.1 }} src="/images/linkedin.svg" alt="linkedin" />
+                <motion.img
+                  loading="eager"
+                  initial={{ y: 500 }}
+                  width={80}
+                  height={80}
+                  animate={{ y: 0 }}
+                  transition={{ duration: 1, delay: 0.1 }}
+                  src="/images/linkedin.svg"
+                  alt="linkedin"
+                />
               </a>
             </App>
 
@@ -331,7 +432,13 @@ export default function Mobile() {
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                <motion.img loading="eager" initial={{y: 500}} width={80} height={80} animate={{y: 0}} transition={{ duration: 1}}
+                <motion.img
+                  loading="eager"
+                  initial={{ y: 500 }}
+                  width={80}
+                  height={80}
+                  animate={{ y: 0 }}
+                  transition={{ duration: 1 }}
                   src="/images/x.svg"
                   alt="twitter/x"
                   className="rounded-2xl"
@@ -345,63 +452,119 @@ export default function Mobile() {
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                <motion.img loading="eager" initial={{y: 500}} width={80} height={80} animate={{y: 0}} transition={{ duration: 1, delay: 0.1 }} src="/images/telegram.svg" alt="telegram" />
+                <motion.img
+                  loading="eager"
+                  initial={{ y: 500 }}
+                  width={80}
+                  height={80}
+                  animate={{ y: 0 }}
+                  transition={{ duration: 1, delay: 0.1 }}
+                  src="/images/telegram.svg"
+                  alt="telegram"
+                />
               </a>
             </App>
 
             <App className="w-20 h-20 hover:scale-[1.05] transition-all duration-200">
               <a
-                href="/docs/resume.docx"
+                href="/docs/resume.pdf"
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                <motion.img loading="eager" initial={{y: 500}} width={80} height={80} animate={{y: 0}} transition={{ duration: 1, delay: 0.2 }} src="/images/word.png" alt="resume" />
+                <motion.img
+                  loading="eager"
+                  initial={{ y: 500 }}
+                  width={80}
+                  height={80}
+                  animate={{ y: 0 }}
+                  transition={{ duration: 1, delay: 0.2 }}
+                  src="/images/word.png"
+                  alt="resume"
+                />
               </a>
             </App>
           </div>
 
           <div className="flex justify-around mb-10 p-2 gap-2">
-            <App drag dragConstraints={{ top: 0, left: 0, right: 0, bottom: 0}}
+            <App
+              drag
+              dragConstraints={{ top: 0, left: 0, right: 0, bottom: 0 }}
               className="w-20 h-20 cursor-pointer"
               onClick={() => {
                 setIsApp1Open(true);
               }}
             >
-              <motion.img loading="eager" initial={{y: 500}} width={80} height={80} animate={{y: 0}} transition={{ duration: 1, delay: 0.1 }}
+              <motion.img
+                loading="eager"
+                initial={{ y: 500 }}
+                width={80}
+                height={80}
+                animate={{ y: 0 }}
+                transition={{ duration: 1, delay: 0.1 }}
                 src="/images/files.png"
                 alt="skills"
                 className="rounded-4xl"
               />
             </App>
 
-            <App drag dragConstraints={{ top: 0, left: 0, right: 0, bottom: 0}}
+            <App
+              drag
+              dragConstraints={{ top: 0, left: 0, right: 0, bottom: 0 }}
               className="w-20 h-20 cursor-pointer"
               onClick={() => {
                 setIsApp2Open(true);
               }}
             >
-              <motion.img loading="eager" initial={{y: 500}} width={80} height={80} animate={{y: 0}} transition={{ duration: 1, delay: 0 }} src="/images/gallery.png" alt="projects" />
+              <motion.img
+                loading="eager"
+                initial={{ y: 500 }}
+                width={80}
+                height={80}
+                animate={{ y: 0 }}
+                transition={{ duration: 1, delay: 0 }}
+                src="/images/gallery.png"
+                alt="projects"
+              />
             </App>
 
-            <App drag dragConstraints={{ top: 0, left: 0, right: 0, bottom: 0}}
+            <App
+              drag
+              dragConstraints={{ top: 0, left: 0, right: 0, bottom: 0 }}
               className="w-20 h-20 cursor-pointer"
               onClick={() => {
                 setIsApp3Open(true);
               }}
             >
-              <motion.img loading="eager" initial={{y: 500}} width={80} height={80} animate={{y: 0}} transition={{ duration: 1, delay: 0 }}
+              <motion.img
+                loading="eager"
+                initial={{ y: 500 }}
+                width={80}
+                height={80}
+                animate={{ y: 0 }}
+                transition={{ duration: 1, delay: 0 }}
                 src="/images/android_word.png"
                 alt="about me"
               />
             </App>
 
-            <App drag dragConstraints={{ top: 0, left: 0, right: 0, bottom: 0}}
+            <App
+              drag
+              dragConstraints={{ top: 0, left: 0, right: 0, bottom: 0 }}
               className="w-20 h-20 cursor-pointer"
               onClick={() => {
                 setIsApp4Open(true);
               }}
             >
-              <motion.img loading="eager" initial={{y: 500}} width={80} height={80} animate={{y: 0}} transition={{ duration: 1, delay: 0.1 }} src="/images/messages.png" alt="services" />
+              <motion.img
+                loading="eager"
+                initial={{ y: 500 }}
+                width={80}
+                height={80}
+                animate={{ y: 0 }}
+                transition={{ duration: 1, delay: 0.1 }}
+                src="/images/messages.png"
+                alt="services"
+              />
             </App>
           </div>
         </div>

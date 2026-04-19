@@ -1,4 +1,10 @@
-import React, { useState, useRef, useEffect, useCallback, useMemo } from "react";
+import React, {
+  useState,
+  useRef,
+  useEffect,
+  useCallback,
+  useMemo,
+} from "react";
 import App from "./app.tsx";
 import { motion, AnimatePresence } from "framer-motion";
 import { Rnd } from "react-rnd";
@@ -70,27 +76,39 @@ interface QuickLink {
 
 const QUICK_LINKS: QuickLink[] = [
   { label: "Email", icon: "📧", href: "mailto:emekaogbuchidubem@gmail.com" },
-  { label: "LinkedIn", icon: "🔗", href: "https://www.linkedin.com/in/emekaogbuchidubem/" },
+  {
+    label: "LinkedIn",
+    icon: "🔗",
+    href: "https://www.linkedin.com/in/emekaogbuchidubem/",
+  },
   { label: "Telegram", icon: "📱", href: "https://t.me/heislaflame" },
   { label: "Twitter", icon: "🐦", href: "https://x.com/heislaflame" },
-  { label: "Resume", icon: "📄", href: "/docs/resume.docx" },
+  { label: "Resume", icon: "📄", href: "/docs/resume.pdf" },
 ];
 
 // ── Window state ──────────────────────────────────────────────────────
 interface WindowState {
   isOpen: boolean;
   isMaximized: boolean;
-  isMinimized: boolean;  // true = taskbar indicator shown (app was opened at some point)
+  isMinimized: boolean; // true = taskbar indicator shown (app was opened at some point)
   isFocused: boolean;
   zIndex: number;
 }
 
 function createDefaultWindowState(): WindowState {
-  return { isOpen: false, isMaximized: false, isMinimized: false, isFocused: false, zIndex: 1 };
+  return {
+    isOpen: false,
+    isMaximized: false,
+    isMinimized: false,
+    isFocused: false,
+    zIndex: 1,
+  };
 }
 
 function createInitialStates(): Record<string, WindowState> {
-  const states: Record<string, WindowState> = { search: createDefaultWindowState() };
+  const states: Record<string, WindowState> = {
+    search: createDefaultWindowState(),
+  };
   for (const app of APP_CONFIGS) {
     states[app.id] = createDefaultWindowState();
   }
@@ -100,14 +118,16 @@ function createInitialStates(): Record<string, WindowState> {
 // ── Component ─────────────────────────────────────────────────────────
 export default function Taskbar({ children }: { children: React.ReactNode }) {
   const [now, setNow] = useState(new Date());
-  const [windows, setWindows] = useState<Record<string, WindowState>>(createInitialStates);
+  const [windows, setWindows] =
+    useState<Record<string, WindowState>>(createInitialStates);
   const [searchQuery, setSearchQuery] = useState("");
   const zCounter = useRef(10);
   const searchInputRef = useRef<HTMLInputElement>(null);
 
   // Clock — sync to the start of the next minute so the first tick is accurate
   useEffect(() => {
-    const msUntilNextMinute = (60 - now.getSeconds()) * 1000 - now.getMilliseconds();
+    const msUntilNextMinute =
+      (60 - now.getSeconds()) * 1000 - now.getMilliseconds();
     const timeout = setTimeout(() => {
       setNow(new Date());
       const interval = setInterval(() => setNow(new Date()), 60000);
@@ -130,9 +150,12 @@ export default function Taskbar({ children }: { children: React.ReactNode }) {
     return zCounter.current;
   }, []);
 
-  const updateWindow = useCallback((id: string, patch: Partial<WindowState>) => {
-    setWindows((prev) => ({ ...prev, [id]: { ...prev[id], ...patch } }));
-  }, []);
+  const updateWindow = useCallback(
+    (id: string, patch: Partial<WindowState>) => {
+      setWindows((prev) => ({ ...prev, [id]: { ...prev[id], ...patch } }));
+    },
+    [],
+  );
 
   const unfocusAll = useCallback(() => {
     setWindows((prev) => {
@@ -168,7 +191,12 @@ export default function Taskbar({ children }: { children: React.ReactNode }) {
         focusWindow(id);
       } else {
         // Window never opened or was closed — open fresh
-        updateWindow(id, { isOpen: true, isMinimized: true, isFocused: true, zIndex: nextZ() });
+        updateWindow(id, {
+          isOpen: true,
+          isMinimized: true,
+          isFocused: true,
+          zIndex: nextZ(),
+        });
         focusWindow(id);
       }
       updateWindow("search", { isOpen: false });
@@ -190,19 +218,30 @@ export default function Taskbar({ children }: { children: React.ReactNode }) {
   const query = searchQuery.toLowerCase().trim();
 
   const filteredApps = useMemo(
-    () => (query ? APP_CONFIGS.filter((a) => a.title.toLowerCase().includes(query)) : APP_CONFIGS),
+    () =>
+      query
+        ? APP_CONFIGS.filter((a) => a.title.toLowerCase().includes(query))
+        : APP_CONFIGS,
     [query],
   );
 
   const filteredLinks = useMemo(
-    () => (query ? QUICK_LINKS.filter((l) => l.label.toLowerCase().includes(query)) : QUICK_LINKS),
+    () =>
+      query
+        ? QUICK_LINKS.filter((l) => l.label.toLowerCase().includes(query))
+        : QUICK_LINKS,
     [query],
   );
 
   // Open an app from the search panel
   const openAppFromSearch = useCallback(
     (id: string) => {
-      updateWindow(id, { isOpen: true, isMinimized: true, isFocused: true, zIndex: nextZ() });
+      updateWindow(id, {
+        isOpen: true,
+        isMinimized: true,
+        isFocused: true,
+        zIndex: nextZ(),
+      });
       focusWindow(id);
       updateWindow("search", { isOpen: false });
       setSearchQuery("");
@@ -214,7 +253,10 @@ export default function Taskbar({ children }: { children: React.ReactNode }) {
   return (
     <>
       {/* Desktop background */}
-      <div className="desktop-bg fixed inset-0" onMouseDown={handleDesktopClick}>
+      <div
+        className="desktop-bg fixed inset-0"
+        onMouseDown={handleDesktopClick}
+      >
         {children}
       </div>
 
@@ -256,11 +298,16 @@ export default function Taskbar({ children }: { children: React.ReactNode }) {
             </div>
 
             {/* Scrollable content */}
-            <div className="flex-1 overflow-y-auto pb-3" style={{ maxHeight: "calc(85vh - 80px)" }}>
+            <div
+              className="flex-1 overflow-y-auto pb-3"
+              style={{ maxHeight: "calc(85vh - 80px)" }}
+            >
               {/* Apps section */}
               {filteredApps.length > 0 && (
                 <>
-                  <p className="search-section-title">{query ? "Apps" : "Recent"}</p>
+                  <p className="search-section-title">
+                    {query ? "Apps" : "Recent"}
+                  </p>
                   <div className="flex flex-wrap gap-1 px-3">
                     {filteredApps.map((app) => (
                       <div
@@ -339,8 +386,14 @@ export default function Taskbar({ children }: { children: React.ReactNode }) {
               minHeight="300px"
               minWidth="300px"
               default={{
-                x: typeof window !== "undefined" ? (window.innerWidth - app.defaultWidth) / 2 : 100,
-                y: typeof window !== "undefined" ? (window.innerHeight - app.defaultHeight) / 2 : 100,
+                x:
+                  typeof window !== "undefined"
+                    ? (window.innerWidth - app.defaultWidth) / 2
+                    : 100,
+                y:
+                  typeof window !== "undefined"
+                    ? (window.innerHeight - app.defaultHeight) / 2
+                    : 100,
                 width: app.defaultWidth,
                 height: app.defaultHeight,
               }}
@@ -349,8 +402,14 @@ export default function Taskbar({ children }: { children: React.ReactNode }) {
               size={
                 win.isMaximized
                   ? {
-                      width: typeof window !== "undefined" ? window.innerWidth : "100%",
-                      height: typeof window !== "undefined" ? window.innerHeight - 52 : "100%",
+                      width:
+                        typeof window !== "undefined"
+                          ? window.innerWidth
+                          : "100%",
+                      height:
+                        typeof window !== "undefined"
+                          ? window.innerHeight - 52
+                          : "100%",
                     }
                   : undefined
               }
@@ -396,7 +455,14 @@ export default function Taskbar({ children }: { children: React.ReactNode }) {
                       });
                     }}
                   >
-                    <img loading="lazy" src="/images/exit.svg" alt="close" width={16} height={10} className="invert-0" />
+                    <img
+                      loading="lazy"
+                      src="/images/exit.svg"
+                      alt="close"
+                      width={16}
+                      height={10}
+                      className="invert-0"
+                    />
                   </button>
 
                   {/* Maximize */}
@@ -407,7 +473,14 @@ export default function Taskbar({ children }: { children: React.ReactNode }) {
                       updateWindow(app.id, { isMaximized: !win.isMaximized });
                     }}
                   >
-                    <img loading="lazy" src="/images/maximize.svg" alt="maximize" width={13} height={10} className="invert-0" />
+                    <img
+                      loading="lazy"
+                      src="/images/maximize.svg"
+                      alt="maximize"
+                      width={13}
+                      height={10}
+                      className="invert-0"
+                    />
                   </button>
 
                   {/* Minimize */}
@@ -419,7 +492,14 @@ export default function Taskbar({ children }: { children: React.ReactNode }) {
                       unfocusAll();
                     }}
                   >
-                    <img loading="lazy" src="/images/minimize.svg" alt="minimize" width={20} height={10} className="invert-0" />
+                    <img
+                      loading="lazy"
+                      src="/images/minimize.svg"
+                      alt="minimize"
+                      width={20}
+                      height={10}
+                      className="invert-0"
+                    />
                   </button>
                 </div>
 
@@ -436,7 +516,13 @@ export default function Taskbar({ children }: { children: React.ReactNode }) {
         {/* Windows button */}
         <a href="/">
           <App className="h-10 w-10 cursor-pointer rounded flex justify-center items-center hover-white">
-            <img loading="eager" src="/images/Windows.png" alt="Windows Icon" width={30} height={30} />
+            <img
+              loading="eager"
+              src="/images/Windows.png"
+              alt="Windows Icon"
+              width={30}
+              height={30}
+            />
           </App>
         </a>
 
@@ -444,16 +530,27 @@ export default function Taskbar({ children }: { children: React.ReactNode }) {
         <App
           className="flex justify-center items-center rounded-2xl cursor-pointer h-7.5 w-25"
           style={{
-            backgroundColor: windows.search.isOpen ? "rgba(54, 129, 214)" : "rgba(0,0,0,0.3)",
+            backgroundColor: windows.search.isOpen
+              ? "rgba(54, 129, 214)"
+              : "rgba(0,0,0,0.3)",
           }}
           onClick={(e) => {
             e.stopPropagation();
             const isOpen = !windows.search.isOpen;
-            updateWindow("search", { isOpen, zIndex: isOpen ? nextZ() : windows.search.zIndex });
+            updateWindow("search", {
+              isOpen,
+              zIndex: isOpen ? nextZ() : windows.search.zIndex,
+            });
             if (!isOpen) setSearchQuery("");
           }}
         >
-          <img loading="eager" src="/images/search.svg" alt="Search Icon" width={20} height={20} />
+          <img
+            loading="eager"
+            src="/images/search.svg"
+            alt="Search Icon"
+            width={20}
+            height={20}
+          />
           <p className="text-white text-[13px] px-2">Search</p>
         </App>
 
@@ -465,7 +562,9 @@ export default function Taskbar({ children }: { children: React.ReactNode }) {
               key={app.id}
               className="relative h-10 w-10 cursor-pointer rounded flex justify-center items-center hover-white"
               style={{
-                backgroundColor: win.isFocused ? "rgba(255, 255, 255, 0.644)" : "",
+                backgroundColor: win.isFocused
+                  ? "rgba(255, 255, 255, 0.644)"
+                  : "",
               }}
               onClick={(e) => {
                 e.stopPropagation();
@@ -478,7 +577,13 @@ export default function Taskbar({ children }: { children: React.ReactNode }) {
                 alt={app.title}
                 width={app.id === "about" ? 60 : 30}
                 height={app.id === "about" ? 60 : 30}
-                className={app.id === "services" ? "pb-1" : app.id === "projects" ? "pb-px" : ""}
+                className={
+                  app.id === "services"
+                    ? "pb-1"
+                    : app.id === "projects"
+                      ? "pb-px"
+                      : ""
+                }
               />
               {win.isMinimized && (
                 <div className="absolute w-3 left-1/2 -translate-x-1/2 h-1 rounded-2xl mb-px windows-blue-bg bottom-0" />
@@ -490,9 +595,30 @@ export default function Taskbar({ children }: { children: React.ReactNode }) {
         {/* System tray */}
         <div className="absolute right-0 flex gap-3">
           <div className="flex py-3 gap-2">
-            <img loading="eager" src="/images/wifi.svg" alt="wifi" width={20} height={20} className="invert" />
-            <img loading="eager" src="/images/speaker.svg" alt="speaker" width={20} height={20} className="invert" />
-            <img loading="eager" src="/images/battery.svg" alt="battery" width={20} height={20} className="invert" />
+            <img
+              loading="eager"
+              src="/images/wifi.svg"
+              alt="wifi"
+              width={20}
+              height={20}
+              className="invert"
+            />
+            <img
+              loading="eager"
+              src="/images/speaker.svg"
+              alt="speaker"
+              width={20}
+              height={20}
+              className="invert"
+            />
+            <img
+              loading="eager"
+              src="/images/battery.svg"
+              alt="battery"
+              width={20}
+              height={20}
+              className="invert"
+            />
           </div>
 
           <div className="mr-3">
