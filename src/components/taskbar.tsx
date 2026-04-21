@@ -75,15 +75,27 @@ interface QuickLink {
 }
 
 const QUICK_LINKS: QuickLink[] = [
-  { label: "Email", icon: "📧", href: "mailto:emekaogbuchidubem@gmail.com" },
+  {
+    label: "Email",
+    icon: "/images/gmail.svg",
+    href: "mailto:emekaogbuchidubem@gmail.com",
+  },
   {
     label: "LinkedIn",
-    icon: "🔗",
+    icon: "/images/linkedin.svg",
     href: "https://www.linkedin.com/in/emekaogbuchidubem/",
   },
-  { label: "Telegram", icon: "📱", href: "https://t.me/heislaflame" },
-  { label: "Twitter", icon: "🐦", href: "https://x.com/heislaflame" },
-  { label: "Resume", icon: "📄", href: "/docs/resume.pdf" },
+  {
+    label: "Telegram",
+    icon: "/images/telegram.svg",
+    href: "https://t.me/heislaflame",
+  },
+  {
+    label: "Twitter",
+    icon: "/images/x.svg",
+    href: "https://x.com/heislaflame",
+  },
+  { label: "Resume", icon: "/images/word.png", href: "/docs/resume.pdf" },
 ];
 
 // ── Window state ──────────────────────────────────────────────────────
@@ -354,7 +366,13 @@ export default function Taskbar({ children }: { children: React.ReactNode }) {
                           setSearchQuery("");
                         }}
                       >
-                        <span className="text-lg">{link.icon}</span>
+                        <img
+                          src={link.icon}
+                          alt={link.label}
+                          width={20}
+                          height={20}
+                          loading="lazy"
+                        />
                         <span>{link.label}</span>
                       </a>
                     ))}
